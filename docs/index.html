@@ -7,33 +7,80 @@
 <link rel="stylesheet" href="css/style.css">
 
 <style>
-main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
-.card { background: var(--card); padding: 18px; border-radius: var(--radius); margin-bottom: 20px; }
+main { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+.card { background: var(--card); padding: 20px; border-radius: var(--radius); margin-bottom: 22px; }
 h2 { margin-top: 0; }
-textarea {
-  width: 100%; min-height: 140px; padding: 12px;
-  border-radius: 6px; border: 1px solid #ccc;
-  font-family: inherit; line-height: 1.5;
+
+textarea, input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1em;
+  line-height: 1.5;
 }
-textarea::placeholder { color: #777; }
+
+textarea { min-height: 140px; }
+textarea::placeholder, input::placeholder { color: #777; }
+
 .reassurance {
-  background: #f3f6fa; border-left: 4px solid var(--blue);
-  padding: 12px; border-radius: 6px; font-size: 0.9em;
+  background: #f3f6fa;
+  border-left: 4px solid var(--blue);
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.9em;
   margin-bottom: 20px;
 }
-.actions button {
-  padding: 12px 16px; border-radius: 6px; border: none;
-  background: var(--blue); color: white; cursor: pointer;
-  font-size: 1em; margin-right: 10px;
+
+.optional-note {
+  font-size: 0.85em;
+  color: #555;
+  margin-bottom: 12px;
 }
-.lang-switch { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+.anonymous-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.9em;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
 .lang-switch button {
-  border: 1px solid #ccc; background: white;
-  padding: 6px 10px; border-radius: 6px; cursor: pointer;
+  border: 1px solid #ccc;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
 }
+
 .lang-switch button.active {
-  background: var(--blue); color: white; border-color: var(--blue);
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
 }
+
+.actions button {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: none;
+  background: var(--blue);
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+.links a { display: block; margin-bottom: 6px; }
+
 html[dir="rtl"] { direction: rtl; }
 </style>
 </head>
@@ -52,41 +99,45 @@ html[dir="rtl"] { direction: rtl; }
 
 <div class="reassurance" data-i18n="reassurance"></div>
 
+<!-- IDENTITÉ -->
 <div class="card">
-  <h2 data-i18n="s1_title"></h2>
-  <textarea data-i18n-ph="s1_ph"></textarea>
+  <h2 data-i18n="id_title"></h2>
+
+  <div class="optional-note" data-i18n="id_optional_note"></div>
+
+  <div class="anonymous-toggle">
+    <input type="checkbox" id="anonymousToggle">
+    <label for="anonymousToggle" data-i18n="id_anonymous"></label>
+  </div>
+
+  <input id="id_name" data-i18n-ph="id_name">
+  <input id="id_contact" data-i18n-ph="id_contact" style="margin-top:10px">
+  <textarea id="id_notes" data-i18n-ph="id_notes" style="margin-top:10px"></textarea>
 </div>
 
+<!-- STRUCTURE DE LA PLAINTE -->
+<div class="card"><h2 data-i18n="s1_title"></h2><textarea data-i18n-ph="s1_ph"></textarea></div>
+<div class="card"><h2 data-i18n="s2_title"></h2><textarea data-i18n-ph="s2_ph"></textarea></div>
+<div class="card"><h2 data-i18n="s3_title"></h2><textarea data-i18n-ph="s3_ph"></textarea></div>
+<div class="card"><h2 data-i18n="s4_title"></h2><textarea data-i18n-ph="s4_ph"></textarea></div>
+<div class="card"><h2 data-i18n="s5_title"></h2><textarea data-i18n-ph="s5_ph"></textarea></div>
+<div class="card"><h2 data-i18n="s6_title"></h2><textarea data-i18n-ph="s6_ph"></textarea></div>
+<div class="card"><h2 data-i18n="s7_title"></h2><textarea data-i18n-ph="s7_ph"></textarea></div>
+
+<!-- ORIENTATION -->
 <div class="card">
-  <h2 data-i18n="s2_title"></h2>
-  <textarea data-i18n-ph="s2_ph"></textarea>
+  <h2 data-i18n="orientation"></h2>
+  <div class="links">
+    <a href="https://www.ohchr.org" target="_blank">UN OHCHR</a>
+    <a href="https://www.ohchr.org/en/special-procedures-human-rights-council" target="_blank">UN Special Procedures</a>
+    <a href="https://www.ohchr.org/en/treaty-bodies" target="_blank">UN Treaty Bodies</a>
+    <a href="https://www.amnesty.org" target="_blank">Amnesty International</a>
+    <a href="https://www.hrw.org" target="_blank">Human Rights Watch</a>
+    <a href="https://www.fidh.org" target="_blank">FIDH</a>
+  </div>
 </div>
 
-<div class="card">
-  <h2 data-i18n="s3_title"></h2>
-  <textarea data-i18n-ph="s3_ph"></textarea>
-</div>
-
-<div class="card">
-  <h2 data-i18n="s4_title"></h2>
-  <textarea data-i18n-ph="s4_ph"></textarea>
-</div>
-
-<div class="card">
-  <h2 data-i18n="s5_title"></h2>
-  <textarea data-i18n-ph="s5_ph"></textarea>
-</div>
-
-<div class="card">
-  <h2 data-i18n="s6_title"></h2>
-  <textarea data-i18n-ph="s6_ph"></textarea>
-</div>
-
-<div class="card">
-  <h2 data-i18n="s7_title"></h2>
-  <textarea data-i18n-ph="s7_ph"></textarea>
-</div>
-
+<!-- EXPORT -->
 <div class="card actions">
   <button data-i18n="export_pdf"></button>
   <button data-i18n="export_docx"></button>
@@ -95,97 +146,78 @@ html[dir="rtl"] { direction: rtl; }
 </main>
 
 <script>
+/* ====== MULTILINGUE ====== */
 const LANGS = {
 fr:{
 dir:"ltr",
 title:"Human For Human",
-subtitle:"Outil neutre de structuration de faits à portée internationale",
+subtitle:"Outil neutre de structuration de plaintes et signalements internationaux",
 reassurance:"Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",
+id_title:"Informations d’identité",
+id_optional_note:"Cette section est entièrement facultative.",
+id_anonymous:"Je souhaite faire une déclaration anonyme",
+id_name:"Nom ou pseudonyme",
+id_contact:"Contact (email, téléphone, autre)",
+id_notes:"Précisions éventuelles (représentant, souhait d’anonymat, contexte…)",
 s1_title:"1. Personnes ou groupes concernés",
-s1_ph:"Qui est concerné ? (personne, groupe, communauté)\nQuel est leur lien avec les faits ?",
+s1_ph:"Qui est concerné ? Quel est leur lien avec les faits ?",
 s2_title:"2. Exposé des faits",
-s2_ph:"Décrivez les faits de manière chronologique.\nQue s’est-il passé ? Quand ? Où ?",
+s2_ph:"Décrivez les faits de manière chronologique.",
 s3_title:"3. Pays et juridictions",
-s3_ph:"Pays des faits.\nPays de la victime.\nPays de l’auteur présumé.",
+s3_ph:"Pays des faits, de la victime, de l’auteur présumé.",
 s4_title:"4. Atteintes alléguées",
-s4_ph:"Quels droits ou libertés semblent avoir été atteints ?\nAucun jargon requis.",
+s4_ph:"Quels droits ou libertés semblent avoir été atteints ?",
 s5_title:"5. Éléments de preuve",
-s5_ph:"Quels éléments existent ? (documents, témoignages, médias…)",
+s5_ph:"Documents, témoignages, médias, rapports existants.",
 s6_title:"6. Impact humain",
 s6_ph:"Conséquences physiques, psychologiques, sociales, juridiques.",
 s7_title:"7. Ce qui est recherché",
-s7_ph:"Reconnaissance, protection, enquête, archivage, prévention…",
+s7_ph:"Reconnaissance, protection, enquête, archivage, prévention.",
+orientation:"Où transmettre une plainte ou un signalement",
 export_pdf:"Exporter en PDF",
 export_docx:"Exporter en DOCX"
-},
-en:{
-dir:"ltr",
-title:"Human For Human",
-subtitle:"Neutral tool to structure facts for international reporting",
-reassurance:"Nothing is sent. Nothing is stored. Everything stays on your device.",
-s1_title:"1. Persons or groups concerned",
-s1_ph:"Who is concerned?\nWhat is their relation to the facts?",
-s2_title:"2. Statement of facts",
-s2_ph:"Describe the facts chronologically.\nWhat happened? When? Where?",
-s3_title:"3. Countries and jurisdictions",
-s3_ph:"Country of events.\nCountry of victim.\nCountry of alleged perpetrator.",
-s4_title:"4. Alleged violations",
-s4_ph:"Which rights or freedoms appear to be violated?",
-s5_title:"5. Evidence available",
-s5_ph:"What evidence exists? (documents, testimonies, media…)",
-s6_title:"6. Human impact",
-s6_ph:"Physical, psychological, social or legal consequences.",
-s7_title:"7. What is sought",
-s7_ph:"Recognition, protection, investigation, record, prevention…",
-export_pdf:"Export PDF",
-export_docx:"Export DOCX"
-},
-ar:{
-dir:"rtl",
-title:"إنسان من أجل إنسان",
-subtitle:"أداة محايدة لتنظيم الوقائع لأغراض دولية",
-reassurance:"لا يتم إرسال أي شيء. لا يتم تخزين أي شيء. كل شيء يبقى على جهازك.",
-s1_title:"١. الأشخاص أو المجموعات المعنية",
-s1_ph:"من المتأثر بالوقائع؟\nما علاقتهم بها؟",
-s2_title:"٢. عرض الوقائع",
-s2_ph:"صف الوقائع بترتيب زمني.\nماذا حدث؟ متى؟ أين؟",
-s3_title:"٣. الدول والاختصاصات",
-s3_ph:"دولة وقوع الأحداث.\nدولة الضحية.\nدولة الجهة المتهمة.",
-s4_title:"٤. الانتهاكات المزعومة",
-s4_ph:"ما الحقوق أو الحريات التي يبدو أنها انتُهكت؟",
-s5_title:"٥. الأدلة المتوفرة",
-s5_ph:"ما الأدلة الموجودة؟ (وثائق، شهادات، وسائل إعلام…)",
-s6_title:"٦. الأثر الإنساني",
-s6_ph:"الآثار الجسدية أو النفسية أو الاجتماعية أو القانونية.",
-s7_title:"٧. ما الذي يُطلب",
-s7_ph:"الاعتراف، الحماية، التحقيق، التوثيق، الوقاية…",
-export_pdf:"تصدير PDF",
-export_docx:"تصدير DOCX"
 }
 };
 
 let current="fr";
-
 const switcher=document.getElementById("langSwitch");
+
 Object.keys(LANGS).forEach(l=>{
-const b=document.createElement("button");
-b.textContent=l.toUpperCase();
-b.onclick=()=>setLang(l);
-b.dataset.lang=l;
-switcher.appendChild(b);
+  const b=document.createElement("button");
+  b.textContent=l.toUpperCase();
+  b.onclick=()=>setLang(l);
+  b.dataset.lang=l;
+  switcher.appendChild(b);
 });
 
 function setLang(l){
-current=l;
-const d=LANGS[l];
-document.documentElement.lang=l;
-document.documentElement.dir=d.dir;
-document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=d[e.dataset.i18n]);
-document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.placeholder=d[e.dataset.i18nPh]);
-document.querySelectorAll(".lang-switch button")
-.forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+  current=l;
+  const d=LANGS[l];
+  document.documentElement.lang=l;
+  document.documentElement.dir=d.dir;
+  document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=d[e.dataset.i18n]);
+  document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.placeholder=d[e.dataset.i18nPh]);
+  document.querySelectorAll(".lang-switch button")
+    .forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
 }
 setLang(current);
+
+/* ====== MODE ANONYME ====== */
+const anonToggle = document.getElementById("anonymousToggle");
+const idFields = ["id_name","id_contact","id_notes"].map(id=>document.getElementById(id));
+
+anonToggle.addEventListener("change", () => {
+  if (anonToggle.checked) {
+    idFields.forEach(f => {
+      f.value = "";
+      f.disabled = true;
+      f.placeholder = "";
+    });
+  } else {
+    idFields.forEach(f => f.disabled = false);
+    setLang(current); // restaure placeholders
+  }
+});
 </script>
 
 </body>
