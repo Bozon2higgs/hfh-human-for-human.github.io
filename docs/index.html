@@ -492,17 +492,15 @@ function collectData() {
 }
 
 function libsReady() {
-  const hasPDF =
-    typeof window.jspdf !== "undefined" &&
-    typeof window.jspdf.jsPDF === "function";
+  const hasPDF = !!(window.jspdf && typeof window.jspdf.jsPDF === "function");
 
   const hasDOCX =
-    typeof window.docx !== "undefined" &&
-    (typeof window.saveAs === "function" ||
-     typeof window.FileSaver !== "undefined");
+    !!(window.docx && typeof window.docx.Document === "function") &&
+    (typeof window.saveAs === "function");
 
   return { hasPDF, hasDOCX };
 }
+
 
 
 function ensureLibsOrAlert(which) {
