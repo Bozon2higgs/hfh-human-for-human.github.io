@@ -49,31 +49,23 @@
       color: var(--blue-dark);
     }
 
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
     textarea {
       width: 100%;
-      min-height: 100px;
-      padding: 10px;
+      min-height: 140px;
+      padding: 12px;
       border-radius: 6px;
       border: 1px solid #ccc;
       font-family: inherit;
       font-size: 1em;
+      line-height: 1.5;
     }
 
-    .hint {
-      font-size: 0.9em;
-      color: #555;
-      margin-top: 6px;
+    textarea::placeholder {
+      color: #777;
     }
 
     .reassurance {
       font-size: 0.9em;
-      color: #444;
       background: #f3f6fa;
       border-left: 4px solid var(--blue);
       padding: 12px;
@@ -107,114 +99,77 @@
 <header class="site-header">
   <div class="header-inner">
     <h1 data-i18n="title">Human For Human</h1>
-    <p data-i18n="subtitle">
-      Un outil simple pour structurer des faits, sans plateforme ni collecte.
-    </p>
-
+    <p data-i18n="subtitle"></p>
     <div class="lang-switch" id="langSwitch"></div>
   </div>
 </header>
 
 <main>
 
-  <div class="reassurance" data-i18n="reassurance">
-    Rien n’est envoyé. Rien n’est enregistré.  
-    Tout reste sur votre appareil.
+  <div class="reassurance" data-i18n="reassurance"></div>
+
+  <div class="card">
+    <div class="step" data-i18n="step1"></div>
+    <textarea id="summary" data-i18n-placeholder="summary_ph"></textarea>
   </div>
 
   <div class="card">
-    <div class="step" data-i18n="step1">Étape 1 — L’essentiel</div>
-    <label for="summary" data-i18n="summary_label">Résumé des faits</label>
-    <textarea id="summary"></textarea>
-    <div class="hint" data-i18n="summary_hint">
-      Même quelques mots suffisent.
-    </div>
+    <div class="step" data-i18n="step2"></div>
+    <textarea id="details" data-i18n-placeholder="details_ph"></textarea>
   </div>
 
   <div class="card">
-    <div class="step" data-i18n="step2">Étape 2 — Les détails</div>
-    <label for="details" data-i18n="details_label">Description détaillée</label>
-    <textarea id="details"></textarea>
-    <div class="hint" data-i18n="details_hint">
-      Prenez votre temps. Vous pouvez revenir plus tard.
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="step" data-i18n="step3">Étape 3 — Conserver une trace</div>
+    <div class="step" data-i18n="step3"></div>
     <div class="actions">
-      <button onclick="exportPDF()" data-i18n="export_pdf">Exporter en PDF</button>
-      <button onclick="exportDOCX()" data-i18n="export_docx">Exporter en DOCX</button>
-    </div>
-    <div class="hint" data-i18n="export_hint">
-      Les fichiers sont créés localement sur votre appareil.
+      <button onclick="exportPDF()" data-i18n="export_pdf"></button>
+      <button onclick="exportDOCX()" data-i18n="export_docx"></button>
     </div>
   </div>
 
 </main>
 
 <script>
-/* ========= LANG ========= */
-
 const LANGS = {
   fr: {
     dir: "ltr",
     title: "Human For Human",
-    subtitle: "Un outil simple pour structurer des faits, sans plateforme ni collecte.",
+    subtitle: "Un espace simple pour poser des faits, à votre rythme.",
     reassurance: "Rien n’est envoyé. Rien n’est enregistré. Tout reste sur votre appareil.",
     step1: "Étape 1 — L’essentiel",
     step2: "Étape 2 — Les détails",
     step3: "Étape 3 — Conserver une trace",
-    summary_label: "Résumé des faits",
-    summary_hint: "Même quelques mots suffisent.",
-    details_label: "Description détaillée",
-    details_hint: "Prenez votre temps. Vous pouvez revenir plus tard.",
+    summary_ph:
+      "Qui est concerné ?\nOù et quand cela s’est-il passé ?\nQue s’est-il passé, simplement ?\n\nMême quelques mots suffisent.",
+    details_ph:
+      "Décrivez ce qui s’est déroulé, dans l’ordre.\nQui a fait quoi ?\nY avait-il des témoins ?\nComment vous êtes-vous senti ?\n\nÉcrivez librement. Il n’y a pas de bonne ou de mauvaise forme.",
     export_pdf: "Exporter en PDF",
-    export_docx: "Exporter en DOCX",
-    export_hint: "Les fichiers sont créés localement sur votre appareil."
-  },
-  en: {
-    dir: "ltr",
-    title: "Human For Human",
-    subtitle: "A simple tool to structure facts, without platform or data collection.",
-    reassurance: "Nothing is sent. Nothing is stored. Everything stays on your device.",
-    step1: "Step 1 — The essentials",
-    step2: "Step 2 — Details",
-    step3: "Step 3 — Keep a copy",
-    summary_label: "Summary of facts",
-    summary_hint: "Even a few words are enough.",
-    details_label: "Detailed description",
-    details_hint: "Take your time. You can come back later.",
-    export_pdf: "Export as PDF",
-    export_docx: "Export as DOCX",
-    export_hint: "Files are created locally on your device."
+    export_docx: "Exporter en DOCX"
   }
-  // (les autres langues restent inchangées, structure identique)
 };
 
-const DEFAULT_LANG = (navigator.language || "fr").slice(0,2);
-let currentLang = LANGS[DEFAULT_LANG] ? DEFAULT_LANG : "fr";
+let currentLang = "fr";
 
 const switchContainer = document.getElementById("langSwitch");
-
 Object.keys(LANGS).forEach(code => {
   const btn = document.createElement("button");
   btn.textContent = code.toUpperCase();
-  btn.dataset.lang = code;
   btn.onclick = () => setLang(code);
+  btn.dataset.lang = code;
   switchContainer.appendChild(btn);
 });
 
 function setLang(lang) {
   currentLang = lang;
   const data = LANGS[lang];
-
   document.documentElement.lang = lang;
   document.documentElement.dir = data.dir;
 
   document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    if (data[key]) el.textContent = data[key];
+    el.textContent = data[el.dataset.i18n];
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    el.placeholder = data[el.dataset.i18nPlaceholder];
   });
 
   document.querySelectorAll(".lang-switch button")
@@ -223,13 +178,13 @@ function setLang(lang) {
 
 setLang(currentLang);
 
-/* ========= EXPORTS ========= */
+/* EXPORTS (inchangés) */
 
 function getContent() {
   return {
     title: LANGS[currentLang].title,
-    summary: document.getElementById("summary").value,
-    details: document.getElementById("details").value
+    summary: summary.value,
+    details: details.value
   };
 }
 
@@ -237,14 +192,12 @@ async function exportPDF() {
   if (!window.jspdf) {
     await loadScript("https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js");
   }
-
   const { jsPDF } = window.jspdf;
-  const data = getContent();
-
+  const d = getContent();
   const doc = new jsPDF();
-  doc.text(data.title, 10, 15);
-  doc.text(data.summary || "", 10, 30);
-  doc.text(data.details || "", 10, 60);
+  doc.text(d.title, 10, 15);
+  doc.text(d.summary || "", 10, 30);
+  doc.text(d.details || "", 10, 60);
   doc.save("HFH.pdf");
 }
 
@@ -253,31 +206,27 @@ async function exportDOCX() {
     await loadScript("https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js");
     await loadScript("https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js");
   }
-
   const { Document, Packer, Paragraph } = window.docx;
-  const data = getContent();
-
+  const d = getContent();
   const doc = new Document({
     sections: [{
       children: [
-        new Paragraph({ text: data.title, bold: true }),
-        new Paragraph(data.summary || ""),
+        new Paragraph({ text: d.title, bold: true }),
+        new Paragraph(d.summary || ""),
         new Paragraph(""),
-        new Paragraph(data.details || "")
+        new Paragraph(d.details || "")
       ]
     }]
   });
-
   const blob = await Packer.toBlob(doc);
   saveAs(blob, "HFH.docx");
 }
 
 function loadScript(src) {
-  return new Promise((resolve, reject) => {
+  return new Promise(r => {
     const s = document.createElement("script");
     s.src = src;
-    s.onload = resolve;
-    s.onerror = reject;
+    s.onload = r;
     document.body.appendChild(s);
   });
 }
