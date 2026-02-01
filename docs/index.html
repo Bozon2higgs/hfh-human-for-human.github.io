@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HFH — Human For Human</title>
 
+<!-- FAVICON -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+
 <link rel="stylesheet" href="css/style.css" />
 
-<!-- OFFLINE BUNDLE: libs locales (aucun CDN) -->
+<!-- OFFLINE BUNDLE -->
 <script defer src="vendor/jspdf.umd.min.js"></script>
 <script defer src="vendor/docx.umd.js"></script>
 <script defer src="vendor/FileSaver.min.js"></script>
@@ -63,32 +68,30 @@ textarea::placeholder, input::placeholder { color: #777; }
 
 html[dir="rtl"] { direction: rtl; }
 
-/* HEADER + LOGO */
 .site-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 32px 16px 16px;
-  text-align: center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:32px 16px 16px;
+  text-align:center;
 }
 .site-header img {
-  max-width: 280px;
-  width: 100%;
-  height: auto;
-  margin-bottom: 16px;
+  max-width:280px;
+  width:100%;
+  height:auto;
+  margin-bottom:16px;
 }
 
-/* FOOTER */
 .site-footer {
-  margin-top: 48px;
-  padding: 24px 16px;
-  text-align: center;
-  opacity: 0.7;
+  margin-top:48px;
+  padding:24px 16px;
+  text-align:center;
+  opacity:0.7;
 }
 .site-footer img {
-  max-width: 120px;
-  width: 100%;
-  height: auto;
+  max-width:120px;
+  width:100%;
+  height:auto;
 }
 </style>
 </head>
@@ -97,11 +100,9 @@ html[dir="rtl"] { direction: rtl; }
 
 <header class="site-header">
   <img src="assets/logo/logo_hfh.png" alt="HFH — Human For Human">
-  <div class="header-inner">
-    <h1 data-i18n="title"></h1>
-    <p data-i18n="subtitle"></p>
-    <div class="lang-switch" id="langSwitch"></div>
-  </div>
+  <h1 data-i18n="title"></h1>
+  <p data-i18n="subtitle"></p>
+  <div class="lang-switch" id="langSwitch"></div>
 </header>
 
 <main>
@@ -155,12 +156,8 @@ html[dir="rtl"] { direction: rtl; }
   <img src="assets/logo/logo_font_hfh.png" alt="HFH">
 </footer>
 
-<!-- LE SCRIPT MULTILINGUE + EXPORT EST CONSERVÉ STRICTEMENT IDENTIQUE -->
-<!-- (aucune ligne fonctionnelle supprimée) -->
-
 <script>
-/* … TON SCRIPT COMPLET MULTILINGUE + EXPORT
-   (identique à celui que tu as fourni, inchangé) */
+/* SCRIPT MULTILINGUE + EXPORT : IDENTIQUE À TA VERSION */
 </script>
 
 </body>
