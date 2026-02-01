@@ -98,7 +98,6 @@ html[dir="rtl"] { direction: rtl; }
 
 <div class="reassurance" data-i18n="reassurance"></div>
 
-<!-- IDENTITÉ -->
 <div class="card">
   <h2 data-i18n="id_title"></h2>
   <div class="optional-note" data-i18n="id_optional"></div>
@@ -113,7 +112,6 @@ html[dir="rtl"] { direction: rtl; }
   <textarea id="id_notes" data-i18n-ph="id_notes" style="margin-top:10px"></textarea>
 </div>
 
-<!-- STRUCTURE -->
 <div class="card"><h2 data-i18n="s1_title"></h2><textarea data-i18n-ph="s1_ph"></textarea></div>
 <div class="card"><h2 data-i18n="s2_title"></h2><textarea data-i18n-ph="s2_ph"></textarea></div>
 <div class="card"><h2 data-i18n="s3_title"></h2><textarea data-i18n-ph="s3_ph"></textarea></div>
@@ -122,7 +120,6 @@ html[dir="rtl"] { direction: rtl; }
 <div class="card"><h2 data-i18n="s6_title"></h2><textarea data-i18n-ph="s6_ph"></textarea></div>
 <div class="card"><h2 data-i18n="s7_title"></h2><textarea data-i18n-ph="s7_ph"></textarea></div>
 
-<!-- ORIENTATION -->
 <div class="card">
   <h2 data-i18n="orientation"></h2>
   <div class="links">
@@ -135,267 +132,51 @@ html[dir="rtl"] { direction: rtl; }
   </div>
 </div>
 
-<!-- EXPORT -->
 <div class="card actions">
-  <button onclick="exportPDF()" data-i18n="export_pdf"></button>
-  <button onclick="exportDOCX()" data-i18n="export_docx"></button>
+  <button data-i18n="export_pdf"></button>
+  <button data-i18n="export_docx"></button>
 </div>
 
 </main>
 
 <script>
-/* ================= MULTILINGUE 7 LANGUES ================= */
+/* ================= LANGUES ================= */
 
 const LANGS = {
-fr:{
-dir:"ltr",
-title:"Human For Human",
-subtitle:"Outil neutre de structuration de plaintes et signalements internationaux",
+fr:{dir:"ltr",title:"Human For Human",subtitle:"Outil neutre de structuration de plaintes et signalements internationaux",
 reassurance:"Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",
-id_title:"Informations d’identité",
-id_optional:"Cette section est entièrement facultative.",
-id_anonymous:"Je souhaite faire une déclaration anonyme",
-id_name:"Nom ou pseudonyme",
-id_contact:"Contact (email, téléphone, autre)",
-id_notes:"Précisions éventuelles (représentant, anonymat, contexte…)",
-s1_title:"1. Personnes ou groupes concernés",
-s1_ph:"Qui est concerné ? Quel est leur lien avec les faits ?",
-s2_title:"2. Exposé des faits",
-s2_ph:"Décrivez les faits de manière chronologique.",
-s3_title:"3. Pays et juridictions",
-s3_ph:"Pays des faits, de la victime, de l’auteur présumé.",
-s4_title:"4. Atteintes alléguées",
-s4_ph:"Quels droits ou libertés semblent avoir été atteints ?",
-s5_title:"5. Éléments de preuve",
-s5_ph:"Documents, témoignages, médias, rapports existants.",
-s6_title:"6. Impact humain",
-s6_ph:"Conséquences physiques, psychologiques, sociales, juridiques.",
-s7_title:"7. Ce qui est recherché",
-s7_ph:"Reconnaissance, protection, enquête, archivage, prévention.",
-orientation:"Où transmettre une plainte ou un signalement",
-export_pdf:"Exporter en PDF",
-export_docx:"Exporter en DOCX"
-},
-
-en:{
-dir:"ltr",
-title:"Human For Human",
-subtitle:"Neutral tool for structuring international complaints and reports",
-reassurance:"Nothing is sent. Nothing is stored. Everything stays on your device.",
-id_title:"Identity information",
-id_optional:"This section is entirely optional.",
-id_anonymous:"I wish to submit an anonymous report",
-id_name:"Name or pseudonym",
-id_contact:"Contact (email, phone, other)",
-id_notes:"Additional notes (representative, anonymity, context…)",
-s1_title:"1. Persons or groups concerned",
-s1_ph:"Who is concerned? What is their relation to the facts?",
-s2_title:"2. Statement of facts",
-s2_ph:"Describe the facts chronologically.",
-s3_title:"3. Countries and jurisdictions",
-s3_ph:"Countries of events, victim, alleged perpetrator.",
-s4_title:"4. Alleged violations",
-s4_ph:"Which rights or freedoms appear to be violated?",
-s5_title:"5. Evidence available",
-s5_ph:"Documents, testimonies, media, existing reports.",
-s6_title:"6. Human impact",
-s6_ph:"Physical, psychological, social or legal consequences.",
-s7_title:"7. What is sought",
-s7_ph:"Recognition, protection, investigation, record, prevention.",
-orientation:"Where to submit a complaint or report",
-export_pdf:"Export PDF",
-export_docx:"Export DOCX"
-},
-
-es:{
-dir:"ltr",
-title:"Human For Human",
-subtitle:"Herramienta neutral para estructurar denuncias y reportes internacionales",
-reassurance:"No se envía ni se almacena nada. Todo permanece en su dispositivo.",
-id_title:"Información de identidad",
-id_optional:"Esta sección es completamente opcional.",
-id_anonymous:"Deseo presentar una denuncia anónima",
-id_name:"Nombre o seudónimo",
-id_contact:"Contacto (correo, teléfono, otro)",
-id_notes:"Notas adicionales (representante, anonimato, contexto…)",
-s1_title:"1. Personas o grupos afectados",
-s1_ph:"¿Quién está afectado? ¿Cuál es su relación con los hechos?",
-s2_title:"2. Exposición de los hechos",
-s2_ph:"Describa los hechos de forma cronológica.",
-s3_title:"3. Países y jurisdicciones",
-s3_ph:"País de los hechos, de la víctima y del presunto autor.",
-s4_title:"4. Vulneraciones alegadas",
-s4_ph:"¿Qué derechos o libertades parecen haber sido vulnerados?",
-s5_title:"5. Pruebas disponibles",
-s5_ph:"Documentos, testimonios, medios, informes existentes.",
-s6_title:"6. Impacto humano",
-s6_ph:"Consecuencias físicas, psicológicas, sociales o jurídicas.",
-s7_title:"7. Lo que se solicita",
-s7_ph:"Reconocimiento, protección, investigación, registro, prevención.",
-orientation:"Dónde presentar una denuncia o reporte",
-export_pdf:"Exportar PDF",
-export_docx:"Exportar DOCX"
-},
-
-ru:{
-dir:"ltr",
-title:"Human For Human",
-subtitle:"Нейтральный инструмент для структурирования международных жалоб",
-reassurance:"Ничего не отправляется и не сохраняется. Всё остаётся на вашем устройстве.",
-id_title:"Идентификационная информация",
-id_optional:"Этот раздел полностью необязателен.",
-id_anonymous:"Я хочу подать анонимное сообщение",
-id_name:"Имя или псевдоним",
-id_contact:"Контакт (email, телефон, другое)",
-id_notes:"Дополнительные сведения (представитель, анонимность, контекст…)",
-s1_title:"1. Затронутые лица или группы",
-s1_ph:"Кто затронут? Какова их связь с фактами?",
-s2_title:"2. Изложение фактов",
-s2_ph:"Опишите факты в хронологическом порядке.",
-s3_title:"3. Страны и юрисдикции",
-s3_ph:"Страна событий, жертвы, предполагаемого нарушителя.",
-s4_title:"4. Предполагаемые нарушения",
-s4_ph:"Какие права или свободы могли быть нарушены?",
-s5_title:"5. Доступные доказательства",
-s5_ph:"Документы, свидетельства, СМИ, отчёты.",
-s6_title:"6. Человеческое воздействие",
-s6_ph:"Физические, психологические, социальные или правовые последствия.",
-s7_title:"7. Запрашиваемые меры",
-s7_ph:"Признание, защита, расследование, документирование, предотвращение.",
-orientation:"Куда направить жалобу или сообщение",
-export_pdf:"Экспорт PDF",
-export_docx:"Экспорт DOCX"
-},
-
-uk:{
-dir:"ltr",
-title:"Human For Human",
-subtitle:"Нейтральний інструмент для структурування міжнародних скарг",
-reassurance:"Нічого не надсилається і не зберігається. Усе залишається на вашому пристрої.",
-id_title:"Ідентифікаційна інформація",
-id_optional:"Цей розділ є повністю необов’язковим.",
-id_anonymous:"Я хочу подати анонімне повідомлення",
-id_name:"Ім’я або псевдонім",
-id_contact:"Контакт (email, телефон, інше)",
-id_notes:"Додаткові примітки (представник, анонімність, контекст…)",
-s1_title:"1. Особи або групи, яких стосується",
-s1_ph:"Хто постраждав? Який їхній зв’язок з фактами?",
-s2_title:"2. Виклад фактів",
-s2_ph:"Опишіть факти у хронологічному порядку.",
-s3_title:"3. Країни та юрисдикції",
-s3_ph:"Країна подій, жертви, ймовірного порушника.",
-s4_title:"4. Ймовірні порушення",
-s4_ph:"Які права або свободи могли бути порушені?",
-s5_title:"5. Наявні докази",
-s5_ph:"Документи, свідчення, медіа, звіти.",
-s6_title:"6. Людський вплив",
-s6_ph:"Фізичні, психологічні, соціальні або правові наслідки.",
-s7_title:"7. Що запитується",
-s7_ph:"Визнання, захист, розслідування, фіксація, запобігання.",
-orientation:"Куди подати скаргу або повідомлення",
-export_pdf:"Експорт PDF",
-export_docx:"Експорт DOCX"
-},
-
-zh:{
-dir:"ltr",
-title:"Human For Human",
-subtitle:"用于整理国际投诉和报告的中立工具",
-reassurance:"不会发送或存储任何内容。所有信息仅保存在您的设备上。",
-id_title:"身份信息",
-id_optional:"此部分完全为可选填写。",
-id_anonymous:"我希望进行匿名申报",
-id_name:"姓名或化名",
-id_contact:"联系方式（邮箱、电话等）",
-id_notes:"补充说明（代理人、匿名、背景等）",
-s1_title:"1. 涉及的个人或群体",
-s1_ph:"谁受到影响？他们与事件的关系是什么？",
-s2_title:"2. 事实陈述",
-s2_ph:"按时间顺序描述事实。",
-s3_title:"3. 国家和司法管辖",
-s3_ph:"事件发生国、受害者国、涉嫌责任方国。",
-s4_title:"4. 涉嫌侵犯",
-s4_ph:"哪些权利或自由可能受到侵犯？",
-s5_title:"5. 现有证据",
-s5_ph:"文件、证言、媒体、现有报告。",
-s6_title:"6. 人类影响",
-s6_ph:"身体、心理、社会或法律影响。",
-s7_title:"7. 诉求",
-s7_ph:"承认、保护、调查、存档、预防。",
-orientation:"在哪里提交投诉或报告",
-export_pdf:"导出 PDF",
-export_docx:"导出 DOCX"
-},
-
-ar:{
-dir:"rtl",
-title:"إنسان من أجل إنسان",
-subtitle:"أداة محايدة لتنظيم الشكاوى والتبليغات الدولية",
-reassurance:"لا يتم إرسال أو تخزين أي بيانات. كل شيء يبقى على جهازك.",
-id_title:"معلومات الهوية",
-id_optional:"هذا القسم اختياري بالكامل.",
-id_anonymous:"أرغب في تقديم بلاغ مجهول",
-id_name:"الاسم أو الاسم المستعار",
-id_contact:"وسيلة التواصل",
-id_notes:"ملاحظات إضافية (تمثيل، سرية، سياق…)",
-s1_title:"١. الأشخاص أو المجموعات المعنية",
-s1_ph:"من المتأثر؟ ما علاقتهم بالوقائع؟",
-s2_title:"٢. عرض الوقائع",
-s2_ph:"صف الوقائع بترتيب زمني.",
-s3_title:"٣. الدول والاختصاصات",
-s3_ph:"دولة الوقائع، الضحية، الجهة المتهمة.",
-s4_title:"٤. الانتهاكات المزعومة",
-s4_ph:"ما الحقوق أو الحريات التي يُحتمل انتهاكها؟",
-s5_title:"٥. الأدلة المتاحة",
-s5_ph:"وثائق، شهادات، وسائل إعلام، تقارير.",
-s6_title:"٦. الأثر الإنساني",
-s6_ph:"الآثار الجسدية أو النفسية أو الاجتماعية أو القانونية.",
-s7_title:"٧. ما المطلوب",
-s7_ph:"الاعتراف، الحماية، التحقيق، التوثيق، الوقاية.",
-orientation:"أين يمكن تقديم شكوى أو بلاغ",
-export_pdf:"تصدير PDF",
-export_docx:"تصدير DOCX"
-}
+id_title:"Informations d’identité",id_optional:"Section facultative.",id_anonymous:"Déclaration anonyme",
+id_name:"Nom ou pseudonyme",id_contact:"Contact",id_notes:"Notes complémentaires",
+s1_title:"1. Personnes concernées",s1_ph:"Qui est concerné ?",
+s2_title:"2. Exposé des faits",s2_ph:"Décrivez les faits.",
+s3_title:"3. Pays et juridictions",s3_ph:"Pays concernés.",
+s4_title:"4. Atteintes alléguées",s4_ph:"Quels droits sont atteints ?",
+s5_title:"5. Preuves",s5_ph:"Quels éléments existent ?",
+s6_title:"6. Impact humain",s6_ph:"Conséquences humaines.",
+s7_title:"7. Ce qui est recherché",s7_ph:"Que souhaitez-vous ?",
+orientation:"Orientation",export_pdf:"Exporter PDF",export_docx:"Exporter DOCX"}
 };
 
+let current="fr";
 
 function setLang(l){
-  current=l;
   const d=LANGS[l];
   document.documentElement.lang=l;
   document.documentElement.dir=d.dir;
   document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=d[e.dataset.i18n]);
   document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.placeholder=d[e.dataset.i18nPh]);
-  document.querySelectorAll(".lang-switch button")
-    .forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
 }
-setLang(current);
 
-/* ================= MODE ANONYME ================= */
-
-const anonToggle=document.getElementById("anonToggle");
-const idFields=["id_name","id_contact","id_notes"].map(id=>document.getElementById(id));
-
-anonToggle.addEventListener("change",()=>{
-  if(anonToggle.checked){
-    idFields.forEach(f=>{f.value="";f.disabled=true;});
-  } else {
-    idFields.forEach(f=>f.disabled=false);
-    setLang(current);
-  }
+const switcher=document.getElementById("langSwitch");
+Object.keys(LANGS).forEach(l=>{
+  const b=document.createElement("button");
+  b.textContent=l.toUpperCase();
+  b.onclick=()=>setLang(l);
+  switcher.appendChild(b);
 });
 
-/* ================= EXPORTS LOCAUX ================= */
-
-function exportPDF(){
-  alert("Export PDF local — à brancher (jsPDF), structure prête.");
-}
-
-function exportDOCX(){
-  alert("Export DOCX local — à brancher (docx + FileSaver), structure prête.");
-}
+setLang(current);
 </script>
 
 </body>
 </html>
-
