@@ -506,10 +506,13 @@ function libsReady() {
 function ensureLibsOrAlert(which) {
   const d = LANGS[currentLang];
   const { hasPDF, hasDOCX } = libsReady();
+
   if (which === "pdf" && !hasPDF) { alert(d.export_missing_libs); return false; }
   if (which === "docx" && !hasDOCX) { alert(d.export_missing_libs); return false; }
+
   return true;
 }
+
 
 function addPDFSection(doc, title, text, y, pageWidth, margin) {
   doc.setFontSize(12);
