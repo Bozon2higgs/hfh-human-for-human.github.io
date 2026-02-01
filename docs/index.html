@@ -657,15 +657,11 @@ document.getElementById("btnCopy").addEventListener("click", exportCopy);
 
 /* ================= VALIDATION LIBS AU CHARGEMENT ================= */
 window.addEventListener("load", () => {
-  const d = LANGS[currentLang];
-  const { hasPDF, hasDOCX } = libsReady();
-  if (!hasPDF || !hasDOCX) {
-    // On ne casse rien : on informe seulement
-    setStatus(d.export_missing_libs);
-  } else {
-    setStatus(d.export_ready);
-  }
+  // On ne bloque rien au chargement.
+  // Les boutons testeront les libs au clic.
+  setStatus(LANGS[currentLang].export_ready);
 });
+
 </script>
 </body>
 </html>
