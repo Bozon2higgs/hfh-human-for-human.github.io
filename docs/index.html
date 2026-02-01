@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HFH — Human For Human</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet" href="css/style.css" />
+
+<!-- OFFLINE BUNDLE: libs locales (aucun CDN) -->
+<script defer src="vendor/jspdf.umd.min.js"></script>
+<script defer src="vendor/docx.umd.js"></script>
+<script defer src="vendor/FileSaver.min.js"></script>
 
 <style>
 main { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
@@ -28,45 +34,18 @@ textarea::placeholder, input::placeholder { color: #777; }
   border-left: 4px solid var(--blue);
   padding: 12px;
   border-radius: 6px;
-  font-size: 0.9em;
+  font-size: 0.95em;
   margin-bottom: 20px;
 }
 
-.optional-note {
-  font-size: 0.85em;
-  color: #555;
-  margin-bottom: 10px;
-}
+.optional-note { font-size: 0.85em; color: #555; margin-bottom: 10px; }
+.anonymous-toggle { display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:0.95em; }
 
-.anonymous-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  font-size: 0.95em;
-}
+.lang-switch { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+.lang-switch button { border:1px solid #ccc; background:white; padding:6px 10px; border-radius:6px; cursor:pointer; }
+.lang-switch button.active { background: var(--blue); color:white; border-color: var(--blue); }
 
-.lang-switch {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.lang-switch button {
-  border: 1px solid #ccc;
-  background: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.lang-switch button.active {
-  background: var(--blue);
-  color: white;
-  border-color: var(--blue);
-}
-
+.actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
 .actions button {
   padding: 12px 16px;
   border-radius: 6px;
@@ -75,18 +54,23 @@ textarea::placeholder, input::placeholder { color: #777; }
   color: white;
   cursor: pointer;
   font-size: 1em;
-  margin-right: 10px;
+}
+.actions button.secondary {
+  background: #2f3a4a;
+}
+.actions .status {
+  font-size: 0.9em;
+  color: #555;
 }
 
-.links a { display: block; margin-bottom: 6px; }
-.small-note { font-size: 0.9em; color: #555; margin-top: 10px; }
+.links a { display:block; margin-bottom:6px; }
+.small-note { font-size:0.9em; color:#555; margin-top:10px; }
 
 html[dir="rtl"] { direction: rtl; }
 </style>
 </head>
 
 <body>
-
 <header class="site-header">
   <div class="header-inner">
     <h1 data-i18n="title"></h1>
@@ -96,295 +80,340 @@ html[dir="rtl"] { direction: rtl; }
 </header>
 
 <main>
+  <div class="reassurance" data-i18n="reassurance"></div>
 
-<div class="reassurance" data-i18n="reassurance"></div>
+  <!-- IDENTITÉ -->
+  <div class="card">
+    <h2 data-i18n="id_title"></h2>
+    <div class="optional-note" data-i18n="id_optional"></div>
 
-<!-- IDENTITÉ -->
-<div class="card">
-  <h2 data-i18n="id_title"></h2>
-  <div class="optional-note" data-i18n="id_optional"></div>
+    <div class="anonymous-toggle">
+      <input type="checkbox" id="anonToggle" />
+      <label for="anonToggle" data-i18n="id_anonymous"></label>
+    </div>
 
-  <div class="anonymous-toggle">
-    <input type="checkbox" id="anonToggle">
-    <label for="anonToggle" data-i18n="id_anonymous"></label>
+    <input id="id_name" data-i18n-ph="id_name" />
+    <input id="id_contact" data-i18n-ph="id_contact" style="margin-top:10px" />
+    <textarea id="id_notes" data-i18n-ph="id_notes" style="margin-top:10px"></textarea>
   </div>
 
-  <input id="id_name" data-i18n-ph="id_name">
-  <input id="id_contact" data-i18n-ph="id_contact" style="margin-top:10px">
-  <textarea id="id_notes" data-i18n-ph="id_notes" style="margin-top:10px"></textarea>
-</div>
+  <!-- STRUCTURE -->
+  <div class="card"><h2 data-i18n="s1_title"></h2><textarea id="s1" data-i18n-ph="s1_ph"></textarea></div>
+  <div class="card"><h2 data-i18n="s2_title"></h2><textarea id="s2" data-i18n-ph="s2_ph"></textarea></div>
+  <div class="card"><h2 data-i18n="s3_title"></h2><textarea id="s3" data-i18n-ph="s3_ph"></textarea></div>
+  <div class="card"><h2 data-i18n="s4_title"></h2><textarea id="s4" data-i18n-ph="s4_ph"></textarea></div>
+  <div class="card"><h2 data-i18n="s5_title"></h2><textarea id="s5" data-i18n-ph="s5_ph"></textarea></div>
+  <div class="card"><h2 data-i18n="s6_title"></h2><textarea id="s6" data-i18n-ph="s6_ph"></textarea></div>
+  <div class="card"><h2 data-i18n="s7_title"></h2><textarea id="s7" data-i18n-ph="s7_ph"></textarea></div>
 
-<!-- STRUCTURE -->
-<div class="card"><h2 data-i18n="s1_title"></h2><textarea id="s1" data-i18n-ph="s1_ph"></textarea></div>
-<div class="card"><h2 data-i18n="s2_title"></h2><textarea id="s2" data-i18n-ph="s2_ph"></textarea></div>
-<div class="card"><h2 data-i18n="s3_title"></h2><textarea id="s3" data-i18n-ph="s3_ph"></textarea></div>
-<div class="card"><h2 data-i18n="s4_title"></h2><textarea id="s4" data-i18n-ph="s4_ph"></textarea></div>
-<div class="card"><h2 data-i18n="s5_title"></h2><textarea id="s5" data-i18n-ph="s5_ph"></textarea></div>
-<div class="card"><h2 data-i18n="s6_title"></h2><textarea id="s6" data-i18n-ph="s6_ph"></textarea></div>
-<div class="card"><h2 data-i18n="s7_title"></h2><textarea id="s7" data-i18n-ph="s7_ph"></textarea></div>
-
-<!-- ORIENTATION -->
-<div class="card">
-  <h2 data-i18n="orientation"></h2>
-  <div class="links">
-    <a href="https://www.ohchr.org" target="_blank" rel="noopener noreferrer">UN OHCHR</a>
-    <a href="https://www.ohchr.org/en/special-procedures-human-rights-council" target="_blank" rel="noopener noreferrer">UN Special Procedures</a>
-    <a href="https://www.ohchr.org/en/treaty-bodies" target="_blank" rel="noopener noreferrer">UN Treaty Bodies</a>
-    <a href="https://www.amnesty.org" target="_blank" rel="noopener noreferrer">Amnesty International</a>
-    <a href="https://www.hrw.org" target="_blank" rel="noopener noreferrer">Human Rights Watch</a>
-    <a href="https://www.fidh.org" target="_blank" rel="noopener noreferrer">FIDH</a>
+  <!-- ORIENTATION -->
+  <div class="card">
+    <h2 data-i18n="orientation"></h2>
+    <div class="links">
+      <a href="https://www.ohchr.org" target="_blank" rel="noopener noreferrer">UN OHCHR</a>
+      <a href="https://www.ohchr.org/en/special-procedures-human-rights-council" target="_blank" rel="noopener noreferrer">UN Special Procedures</a>
+      <a href="https://www.ohchr.org/en/treaty-bodies" target="_blank" rel="noopener noreferrer">UN Treaty Bodies</a>
+      <a href="https://www.amnesty.org" target="_blank" rel="noopener noreferrer">Amnesty International</a>
+      <a href="https://www.hrw.org" target="_blank" rel="noopener noreferrer">Human Rights Watch</a>
+      <a href="https://www.fidh.org" target="_blank" rel="noopener noreferrer">FIDH</a>
+    </div>
+    <div class="small-note" data-i18n="orientation_note"></div>
   </div>
-  <div class="small-note" data-i18n="orientation_note"></div>
-</div>
 
-<!-- EXPORT -->
-<div class="card actions">
-  <button onclick="exportPDF()" data-i18n="export_pdf"></button>
-  <button onclick="exportDOCX()" data-i18n="export_docx"></button>
-</div>
-
+  <!-- EXPORT -->
+  <div class="card">
+    <h2 data-i18n="export_title"></h2>
+    <div class="actions">
+      <button id="btnPdf" type="button" data-i18n="export_pdf"></button>
+      <button id="btnDocx" type="button" data-i18n="export_docx"></button>
+      <button id="btnCopy" type="button" class="secondary" data-i18n="export_copy"></button>
+      <span class="status" id="exportStatus"></span>
+    </div>
+    <div class="small-note" data-i18n="export_note"></div>
+  </div>
 </main>
 
 <script>
 /* ================= MULTILINGUE 7 LANGUES ================= */
-
 const LANGS = {
   fr: {
-    dir: "ltr",
-    title: "Human For Human",
-    subtitle: "Outil neutre de structuration de plaintes et signalements internationaux",
-    reassurance: "Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",
-    id_title: "Informations d’identité",
-    id_optional: "Cette section est entièrement facultative.",
-    id_anonymous: "Je souhaite faire une déclaration anonyme",
-    id_name: "Nom ou pseudonyme",
-    id_contact: "Contact (email, téléphone, autre)",
-    id_notes: "Précisions éventuelles (représentant, anonymat, contexte…)",
-    s1_title: "1. Personnes ou groupes concernés",
-    s1_ph: "Qui est concerné ? Quel est leur lien avec les faits ?",
-    s2_title: "2. Exposé des faits",
-    s2_ph: "Décrivez les faits de manière chronologique (quoi / quand / où / qui).",
-    s3_title: "3. Pays et juridictions",
-    s3_ph: "Pays des faits, de la victime, de l’auteur présumé. Démarches locales éventuelles.",
-    s4_title: "4. Atteintes alléguées",
-    s4_ph: "Quels droits ou libertés semblent avoir été atteints ? (sans jargon obligatoire)",
-    s5_title: "5. Éléments de preuve",
-    s5_ph: "Documents, témoignages, médias, rapports, références disponibles (listez ce qui existe).",
-    s6_title: "6. Impact humain",
-    s6_ph: "Conséquences physiques, psychologiques, sociales, familiales, professionnelles, juridiques.",
-    s7_title: "7. Ce qui est recherché",
-    s7_ph: "Reconnaissance, protection, enquête, archivage, prévention…",
-    orientation: "Où transmettre une plainte ou un signalement",
-    orientation_note: "HFH ne transmet rien et ne recommande aucune entité. Liens fournis à titre informatif.",
-    export_pdf: "Exporter en PDF",
-    export_docx: "Exporter en DOCX",
-    export_error_offline: "Impossible de charger les bibliothèques d’export (hors ligne ?)."
+    dir:"ltr",
+    title:"Human For Human",
+    subtitle:"Outil neutre de structuration de plaintes et signalements internationaux",
+    reassurance:"Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",
+    id_title:"Informations d’identité",
+    id_optional:"Cette section est entièrement facultative.",
+    id_anonymous:"Je souhaite faire une déclaration anonyme",
+    id_name:"Nom ou pseudonyme",
+    id_contact:"Contact (email, téléphone, autre)",
+    id_notes:"Précisions éventuelles (représentant, anonymat, contexte…)",
+    s1_title:"1. Personnes ou groupes concernés",
+    s1_ph:"Qui est concerné ? Quel est leur lien avec les faits ?",
+    s2_title:"2. Exposé des faits",
+    s2_ph:"Décrivez les faits de manière chronologique (quoi / quand / où / qui).",
+    s3_title:"3. Pays et juridictions",
+    s3_ph:"Pays des faits, de la victime, de l’auteur présumé. Démarches locales éventuelles.",
+    s4_title:"4. Atteintes alléguées",
+    s4_ph:"Quels droits ou libertés semblent avoir été atteints ? (sans jargon obligatoire)",
+    s5_title:"5. Éléments de preuve",
+    s5_ph:"Documents, témoignages, médias, rapports, références disponibles (listez ce qui existe).",
+    s6_title:"6. Impact humain",
+    s6_ph:"Conséquences physiques, psychologiques, sociales, familiales, professionnelles, juridiques.",
+    s7_title:"7. Ce qui est recherché",
+    s7_ph:"Reconnaissance, protection, enquête, archivage, prévention…",
+    orientation:"Où transmettre une plainte ou un signalement",
+    orientation_note:"HFH ne transmet rien et ne recommande aucune entité. Liens fournis à titre informatif.",
+    export_title:"Exports locaux",
+    export_pdf:"Exporter PDF",
+    export_docx:"Exporter DOCX",
+    export_copy:"Copier texte",
+    export_note:"Les exports sont générés localement sur votre appareil. Aucun envoi, aucun stockage.",
+    export_missing_libs:"Exports indisponibles : bibliothèques manquantes dans /docs/vendor/.",
+    export_ready:"Prêt.",
+    export_working:"Génération…",
+    export_copied:"Texte copié."
   },
 
   en: {
-    dir: "ltr",
-    title: "Human For Human",
-    subtitle: "Neutral tool for structuring international complaints and reports",
-    reassurance: "Nothing is sent. Nothing is stored. Everything stays on your device.",
-    id_title: "Identity information",
-    id_optional: "This section is entirely optional.",
-    id_anonymous: "I wish to submit an anonymous report",
-    id_name: "Name or pseudonym",
-    id_contact: "Contact (email, phone, other)",
-    id_notes: "Additional notes (representative, anonymity, context…)",
-    s1_title: "1. Persons or groups concerned",
-    s1_ph: "Who is concerned? What is their relation to the facts?",
-    s2_title: "2. Statement of facts",
-    s2_ph: "Describe the facts chronologically (what / when / where / who).",
-    s3_title: "3. Countries and jurisdictions",
-    s3_ph: "Countries of events, victim, alleged perpetrator. Any local steps taken.",
-    s4_title: "4. Alleged violations",
-    s4_ph: "Which rights or freedoms appear to be violated? (no jargon required)",
-    s5_title: "5. Evidence available",
-    s5_ph: "Documents, testimonies, media, reports, references (list what exists).",
-    s6_title: "6. Human impact",
-    s6_ph: "Physical, psychological, social, family, professional, legal consequences.",
-    s7_title: "7. What is sought",
-    s7_ph: "Recognition, protection, investigation, record, prevention…",
-    orientation: "Where to submit a complaint or report",
-    orientation_note: "HFH does not transmit anything and does not endorse any entity. Links are informational.",
-    export_pdf: "Export as PDF",
-    export_docx: "Export as DOCX",
-    export_error_offline: "Unable to load export libraries (offline?)."
+    dir:"ltr",
+    title:"Human For Human",
+    subtitle:"Neutral tool for structuring international complaints and reports",
+    reassurance:"Nothing is sent. Nothing is stored. Everything stays on your device.",
+    id_title:"Identity information",
+    id_optional:"This section is entirely optional.",
+    id_anonymous:"I wish to submit an anonymous report",
+    id_name:"Name or pseudonym",
+    id_contact:"Contact (email, phone, other)",
+    id_notes:"Additional notes (representative, anonymity, context…)",
+    s1_title:"1. Persons or groups concerned",
+    s1_ph:"Who is concerned? What is their relation to the facts?",
+    s2_title:"2. Statement of facts",
+    s2_ph:"Describe the facts chronologically (what / when / where / who).",
+    s3_title:"3. Countries and jurisdictions",
+    s3_ph:"Countries of events, victim, alleged perpetrator. Any local steps taken.",
+    s4_title:"4. Alleged violations",
+    s4_ph:"Which rights or freedoms appear to be violated? (no jargon required)",
+    s5_title:"5. Evidence available",
+    s5_ph:"Documents, testimonies, media, reports, references (list what exists).",
+    s6_title:"6. Human impact",
+    s6_ph:"Physical, psychological, social, family, professional, legal consequences.",
+    s7_title:"7. What is sought",
+    s7_ph:"Recognition, protection, investigation, record, prevention…",
+    orientation:"Where to submit a complaint or report",
+    orientation_note:"HFH does not transmit anything and does not endorse any entity. Links are informational.",
+    export_title:"Local exports",
+    export_pdf:"Export PDF",
+    export_docx:"Export DOCX",
+    export_copy:"Copy text",
+    export_note:"Exports are generated locally on your device. No upload, no storage.",
+    export_missing_libs:"Exports unavailable: missing libraries in /docs/vendor/.",
+    export_ready:"Ready.",
+    export_working:"Generating…",
+    export_copied:"Text copied."
   },
 
   es: {
-    dir: "ltr",
-    title: "Human For Human",
-    subtitle: "Herramienta neutral para estructurar denuncias y reportes internacionales",
-    reassurance: "No se envía ni se almacena nada. Todo permanece en su dispositivo.",
-    id_title: "Información de identidad",
-    id_optional: "Esta sección es completamente opcional.",
-    id_anonymous: "Deseo presentar una denuncia anónima",
-    id_name: "Nombre o seudónimo",
-    id_contact: "Contacto (correo, teléfono, otro)",
-    id_notes: "Notas adicionales (representante, anonimato, contexto…)",
-    s1_title: "1. Personas o grupos afectados",
-    s1_ph: "¿Quién está afectado? ¿Cuál es su relación con los hechos?",
-    s2_title: "2. Exposición de los hechos",
-    s2_ph: "Describa los hechos en orden cronológico (qué / cuándo / dónde / quién).",
-    s3_title: "3. Países y jurisdicciones",
-    s3_ph: "País de los hechos, de la víctima y del presunto autor. Gestiones locales.",
-    s4_title: "4. Vulneraciones alegadas",
-    s4_ph: "¿Qué derechos o libertades parecen vulnerados? (sin jerga obligatoria)",
-    s5_title: "5. Pruebas disponibles",
-    s5_ph: "Documentos, testimonios, medios, informes, referencias (liste lo que existe).",
-    s6_title: "6. Impacto humano",
-    s6_ph: "Consecuencias físicas, psicológicas, sociales, familiares, profesionales o jurídicas.",
-    s7_title: "7. Lo que se solicita",
-    s7_ph: "Reconocimiento, protección, investigación, registro, prevención…",
-    orientation: "Dónde presentar una denuncia o reporte",
-    orientation_note: "HFH no transmite nada ni recomienda ninguna entidad. Enlaces informativos.",
-    export_pdf: "Exportar a PDF",
-    export_docx: "Exportar a DOCX",
-    export_error_offline: "No se pudieron cargar las bibliotecas de exportación (¿sin conexión?)."
+    dir:"ltr",
+    title:"Human For Human",
+    subtitle:"Herramienta neutral para estructurar denuncias y reportes internacionales",
+    reassurance:"No se envía ni se almacena nada. Todo permanece en su dispositivo.",
+    id_title:"Información de identidad",
+    id_optional:"Esta sección es completamente opcional.",
+    id_anonymous:"Deseo presentar una denuncia anónima",
+    id_name:"Nombre o seudónimo",
+    id_contact:"Contacto (correo, teléfono, otro)",
+    id_notes:"Notas adicionales (representante, anonimato, contexto…)",
+    s1_title:"1. Personas o grupos afectados",
+    s1_ph:"¿Quién está afectado? ¿Cuál es su relación con los hechos?",
+    s2_title:"2. Exposición de los hechos",
+    s2_ph:"Describa los hechos en orden cronológico (qué / cuándo / dónde / quién).",
+    s3_title:"3. Países y jurisdicciones",
+    s3_ph:"País de los hechos, de la víctima y del presunto autor. Gestiones locales.",
+    s4_title:"4. Vulneraciones alegadas",
+    s4_ph:"¿Qué derechos o libertades parecen vulnerados? (sin jerga obligatoria)",
+    s5_title:"5. Pruebas disponibles",
+    s5_ph:"Documentos, testimonios, medios, informes, referencias (liste lo que existe).",
+    s6_title:"6. Impacto humano",
+    s6_ph:"Consecuencias físicas, psicológicas, sociales, familiares, profesionales o jurídicas.",
+    s7_title:"7. Lo que se solicita",
+    s7_ph:"Reconocimiento, protección, investigación, registro, prevención…",
+    orientation:"Dónde presentar una denuncia o reporte",
+    orientation_note:"HFH no transmite nada ni recomienda ninguna entidad. Enlaces informativos.",
+    export_title:"Exportaciones locales",
+    export_pdf:"Exportar PDF",
+    export_docx:"Exportar DOCX",
+    export_copy:"Copiar texto",
+    export_note:"Las exportaciones se generan localmente. Sin envío, sin almacenamiento.",
+    export_missing_libs:"Exportaciones no disponibles: faltan librerías en /docs/vendor/.",
+    export_ready:"Listo.",
+    export_working:"Generando…",
+    export_copied:"Texto copiado."
   },
 
   ru: {
-    dir: "ltr",
-    title: "Human For Human",
-    subtitle: "Нейтральный инструмент для структурирования международных жалоб и сообщений",
-    reassurance: "Ничего не отправляется и не сохраняется. Всё остаётся на вашем устройстве.",
-    id_title: "Идентификационная информация",
-    id_optional: "Этот раздел полностью необязателен.",
-    id_anonymous: "Я хочу подать анонимное сообщение",
-    id_name: "Имя или псевдоним",
-    id_contact: "Контакт (email, телефон, другое)",
-    id_notes: "Дополнительно (представитель, анонимность, контекст…)",
-    s1_title: "1. Затронутые лица или группы",
-    s1_ph: "Кто затронут? Какова их связь с фактами?",
-    s2_title: "2. Изложение фактов",
-    s2_ph: "Опишите факты по хронологии (что / когда / где / кто).",
-    s3_title: "3. Страны и юрисдикции",
-    s3_ph: "Страна событий, жертвы, предполагаемого нарушителя. Местные обращения.",
-    s4_title: "4. Предполагаемые нарушения",
-    s4_ph: "Какие права или свободы могли быть нарушены? (без обязательного жаргона)",
-    s5_title: "5. Доступные доказательства",
-    s5_ph: "Документы, свидетельства, медиа, отчёты, ссылки (укажите, что есть).",
-    s6_title: "6. Человеческие последствия",
-    s6_ph: "Физические, психологические, социальные, семейные, профессиональные, правовые последствия.",
-    s7_title: "7. Что запрашивается",
-    s7_ph: "Признание, защита, расследование, фиксация, предотвращение…",
-    orientation: "Куда направить жалобу или сообщение",
-    orientation_note: "HFH ничего не отправляет и не поддерживает конкретные организации. Ссылки — справочно.",
-    export_pdf: "Экспорт в PDF",
-    export_docx: "Экспорт в DOCX",
-    export_error_offline: "Не удалось загрузить библиотеки экспорта (нет сети?)."
+    dir:"ltr",
+    title:"Human For Human",
+    subtitle:"Нейтральный инструмент для структурирования международных жалоб и сообщений",
+    reassurance:"Ничего не отправляется и не сохраняется. Всё остаётся на вашем устройстве.",
+    id_title:"Идентификационная информация",
+    id_optional:"Этот раздел полностью необязателен.",
+    id_anonymous:"Я хочу подать анонимное сообщение",
+    id_name:"Имя или псевдоним",
+    id_contact:"Контакт (email, телефон, другое)",
+    id_notes:"Дополнительно (представитель, анонимность, контекст…)",
+    s1_title:"1. Затронутые лица или группы",
+    s1_ph:"Кто затронут? Какова их связь с фактами?",
+    s2_title:"2. Изложение фактов",
+    s2_ph:"Опишите факты по хронологии (что / когда / где / кто).",
+    s3_title:"3. Страны и юрисдикции",
+    s3_ph:"Страна событий, жертвы, предполагаемого нарушителя. Местные обращения.",
+    s4_title:"4. Предполагаемые нарушения",
+    s4_ph:"Какие права или свободы могли быть нарушены? (без обязательного жаргона)",
+    s5_title:"5. Доступные доказательства",
+    s5_ph:"Документы, свидетельства, медиа, отчёты, ссылки (укажите, что есть).",
+    s6_title:"6. Человеческие последствия",
+    s6_ph:"Физические, психологические, социальные, семейные, профессиональные, правовые последствия.",
+    s7_title:"7. Что запрашивается",
+    s7_ph:"Признание, защита, расследование, фиксация, предотвращение…",
+    orientation:"Куда направить жалобу или сообщение",
+    orientation_note:"HFH ничего не отправляет и не поддерживает конкретные организации. Ссылки — справочно.",
+    export_title:"Локальный экспорт",
+    export_pdf:"Экспорт PDF",
+    export_docx:"Экспорт DOCX",
+    export_copy:"Копировать текст",
+    export_note:"Экспорт создаётся локально. Никакой отправки и хранения.",
+    export_missing_libs:"Экспорт недоступен: нет библиотек в /docs/vendor/.",
+    export_ready:"Готово.",
+    export_working:"Создание…",
+    export_copied:"Текст скопирован."
   },
 
   uk: {
-    dir: "ltr",
-    title: "Human For Human",
-    subtitle: "Нейтральний інструмент для структурування міжнародних скарг і повідомлень",
-    reassurance: "Нічого не надсилається і не зберігається. Усе залишається на вашому пристрої.",
-    id_title: "Ідентифікаційна інформація",
-    id_optional: "Цей розділ є повністю необов’язковим.",
-    id_anonymous: "Я хочу подати анонімне повідомлення",
-    id_name: "Ім’я або псевдонім",
-    id_contact: "Контакт (email, телефон, інше)",
-    id_notes: "Додаткові примітки (представник, анонімність, контекст…)",
-    s1_title: "1. Особи або групи, яких стосується",
-    s1_ph: "Хто постраждав? Який їхній зв’язок з фактами?",
-    s2_title: "2. Виклад фактів",
-    s2_ph: "Опишіть факти хронологічно (що / коли / де / хто).",
-    s3_title: "3. Країни та юрисдикції",
-    s3_ph: "Країна подій, жертви, ймовірного порушника. Місцеві звернення.",
-    s4_title: "4. Ймовірні порушення",
-    s4_ph: "Які права або свободи могли бути порушені? (без обов’язкового жаргону)",
-    s5_title: "5. Наявні докази",
-    s5_ph: "Документи, свідчення, медіа, звіти, посилання (вкажіть, що є).",
-    s6_title: "6. Людський вплив",
-    s6_ph: "Фізичні, психологічні, соціальні, сімейні, професійні, правові наслідки.",
-    s7_title: "7. Що запитується",
-    s7_ph: "Визнання, захист, розслідування, фіксація, запобігання…",
-    orientation: "Куди подати скаргу або повідомлення",
-    orientation_note: "HFH нічого не надсилає і не підтримує жодну організацію. Посилання — довідково.",
-    export_pdf: "Експорт у PDF",
-    export_docx: "Експорт у DOCX",
-    export_error_offline: "Не вдалося завантажити бібліотеки експорту (немає мережі?)."
+    dir:"ltr",
+    title:"Human For Human",
+    subtitle:"Нейтральний інструмент для структурування міжнародних скарг і повідомлень",
+    reassurance:"Нічого не надсилається і не зберігається. Усе залишається на вашому пристрої.",
+    id_title:"Ідентифікаційна інформація",
+    id_optional:"Цей розділ є повністю необов’язковим.",
+    id_anonymous:"Я хочу подати анонімне повідомлення",
+    id_name:"Ім’я або псевдонім",
+    id_contact:"Контакт (email, телефон, інше)",
+    id_notes:"Додаткові примітки (представник, анонімність, контекст…)",
+    s1_title:"1. Особи або групи, яких стосується",
+    s1_ph:"Хто постраждав? Який їхній зв’язок з фактами?",
+    s2_title:"2. Виклад фактів",
+    s2_ph:"Опишіть факти хронологічно (що / коли / де / хто).",
+    s3_title:"3. Країни та юрисдикції",
+    s3_ph:"Країна подій, жертви, ймовірного порушника. Місцеві звернення.",
+    s4_title:"4. Ймовірні порушення",
+    s4_ph:"Які права або свободи могли бути порушені? (без обов’язкового жаргону)",
+    s5_title:"5. Наявні докази",
+    s5_ph:"Документи, свідчення, медіа, звіти, посилання (вкажіть, що є).",
+    s6_title:"6. Людський вплив",
+    s6_ph:"Фізичні, психологічні, соціальні, сімейні, професійні, правові наслідки.",
+    s7_title:"7. Що запитується",
+    s7_ph:"Визнання, захист, розслідування, фіксація, запобігання…",
+    orientation:"Куди подати скаргу або повідомлення",
+    orientation_note:"HFH нічого не надсилає і не підтримує жодну організацію. Посилання — довідково.",
+    export_title:"Локальний експорт",
+    export_pdf:"Експорт PDF",
+    export_docx:"Експорт DOCX",
+    export_copy:"Копіювати текст",
+    export_note:"Експорт створюється локально. Жодного надсилання та зберігання.",
+    export_missing_libs:"Експорт недоступний: немає бібліотек у /docs/vendor/.",
+    export_ready:"Готово.",
+    export_working:"Створення…",
+    export_copied:"Текст скопійовано."
   },
 
   zh: {
-    dir: "ltr",
-    title: "Human For Human",
-    subtitle: "用于整理国际投诉与报告的中立工具",
-    reassurance: "不会发送或存储任何内容。所有信息仅保存在您的设备上。",
-    id_title: "身份信息",
-    id_optional: "此部分完全为可选填写。",
-    id_anonymous: "我希望进行匿名申报",
-    id_name: "姓名或化名",
-    id_contact: "联系方式（邮箱、电话等）",
-    id_notes: "补充说明（代理人、匿名、背景等）",
-    s1_title: "1. 涉及的个人或群体",
-    s1_ph: "谁受到影响？他们与事件的关系是什么？",
-    s2_title: "2. 事实陈述",
-    s2_ph: "按时间顺序描述事实（发生了什么/何时/何地/谁）。",
-    s3_title: "3. 国家与司法管辖",
-    s3_ph: "事件发生国、受害者国、涉嫌责任方国。是否采取过本地行动。",
-    s4_title: "4. 涉嫌侵犯",
-    s4_ph: "哪些权利或自由可能受到侵犯？（不要求法律术语）",
-    s5_title: "5. 现有证据",
-    s5_ph: "文件、证言、媒体、报告、参考来源（列出已有内容）。",
-    s6_title: "6. 人类影响",
-    s6_ph: "身体、心理、社会、家庭、职业或法律影响。",
-    s7_title: "7. 诉求",
-    s7_ph: "承认、保护、调查、存档、预防等。",
-    orientation: "在哪里提交投诉或报告",
-    orientation_note: "HFH 不会传输任何内容，也不为任何机构背书。链接仅供参考。",
-    export_pdf: "导出 PDF",
-    export_docx: "导出 DOCX",
-    export_error_offline: "无法加载导出库（离线？）。"
+    dir:"ltr",
+    title:"Human For Human",
+    subtitle:"用于整理国际投诉与报告的中立工具",
+    reassurance:"不会发送或存储任何内容。所有信息仅保存在您的设备上。",
+    id_title:"身份信息",
+    id_optional:"此部分完全为可选填写。",
+    id_anonymous:"我希望进行匿名申报",
+    id_name:"姓名或化名",
+    id_contact:"联系方式（邮箱、电话等）",
+    id_notes:"补充说明（代理人、匿名、背景等）",
+    s1_title:"1. 涉及的个人或群体",
+    s1_ph:"谁受到影响？他们与事件的关系是什么？",
+    s2_title:"2. 事实陈述",
+    s2_ph:"按时间顺序描述事实（发生了什么/何时/何地/谁）。",
+    s3_title:"3. 国家与司法管辖",
+    s3_ph:"事件发生国、受害者国、涉嫌责任方国。是否采取过本地行动。",
+    s4_title:"4. 涉嫌侵犯",
+    s4_ph:"哪些权利或自由可能受到侵犯？（不要求法律术语）",
+    s5_title:"5. 现有证据",
+    s5_ph:"文件、证言、媒体、报告、参考来源（列出已有内容）。",
+    s6_title:"6. 人类影响",
+    s6_ph:"身体、心理、社会、家庭、职业或法律影响。",
+    s7_title:"7. 诉求",
+    s7_ph:"承认、保护、调查、存档、预防等。",
+    orientation:"在哪里提交投诉或报告",
+    orientation_note:"HFH 不会传输任何内容，也不为任何机构背书。链接仅供参考。",
+    export_title:"本地导出",
+    export_pdf:"导出 PDF",
+    export_docx:"导出 DOCX",
+    export_copy:"复制文本",
+    export_note:"导出在本地生成。无上传、无存储。",
+    export_missing_libs:"导出不可用：/docs/vendor/ 中缺少库文件。",
+    export_ready:"就绪。",
+    export_working:"生成中…",
+    export_copied:"已复制文本。"
   },
 
   ar: {
-    dir: "rtl",
-    title: "إنسان من أجل إنسان",
-    subtitle: "أداة محايدة لتنظيم الشكاوى والتبليغات الدولية",
-    reassurance: "لا يتم إرسال أو تخزين أي بيانات. كل شيء يبقى على جهازك.",
-    id_title: "معلومات الهوية",
-    id_optional: "هذا القسم اختياري بالكامل.",
-    id_anonymous: "أرغب في تقديم بلاغ مجهول",
-    id_name: "الاسم أو الاسم المستعار",
-    id_contact: "وسيلة التواصل",
-    id_notes: "ملاحظات إضافية (تمثيل، سرية، سياق…)",
-    s1_title: "١. الأشخاص أو المجموعات المعنية",
-    s1_ph: "من المتأثر؟ ما علاقتهم بالوقائع؟",
-    s2_title: "٢. عرض الوقائع",
-    s2_ph: "صف الوقائع بترتيب زمني (ماذا/متى/أين/من).",
-    s3_title: "٣. الدول والاختصاصات",
-    s3_ph: "دولة الوقائع، الضحية، الجهة المتهمة. أي إجراءات محلية.",
-    s4_title: "٤. الانتهاكات المزعومة",
-    s4_ph: "ما الحقوق أو الحريات التي يُحتمل انتهاكها؟ (دون مصطلحات إلزامية)",
-    s5_title: "٥. الأدلة المتاحة",
-    s5_ph: "وثائق، شهادات، وسائل إعلام، تقارير، مراجع (اذكر ما هو متوفر).",
-    s6_title: "٦. الأثر الإنساني",
-    s6_ph: "الآثار الجسدية أو النفسية أو الاجتماعية أو الأسرية أو المهنية أو القانونية.",
-    s7_title: "٧. ما المطلوب",
-    s7_ph: "الاعتراف، الحماية، التحقيق، التوثيق، الوقاية…",
-    orientation: "أين يمكن تقديم شكوى أو بلاغ",
-    orientation_note: "HFH لا يرسل أي شيء ولا يوصي بأي جهة. الروابط للمعلومة فقط.",
-    export_pdf: "تصدير PDF",
-    export_docx: "تصدير DOCX",
-    export_error_offline: "تعذر تحميل مكتبات التصدير (دون اتصال؟)."
+    dir:"rtl",
+    title:"إنسان من أجل إنسان",
+    subtitle:"أداة محايدة لتنظيم الشكاوى والتبليغات الدولية",
+    reassurance:"لا يتم إرسال أو تخزين أي بيانات. كل شيء يبقى على جهازك.",
+    id_title:"معلومات الهوية",
+    id_optional:"هذا القسم اختياري بالكامل.",
+    id_anonymous:"أرغب في تقديم بلاغ مجهول",
+    id_name:"الاسم أو الاسم المستعار",
+    id_contact:"وسيلة التواصل",
+    id_notes:"ملاحظات إضافية (تمثيل، سرية، سياق…)",
+    s1_title:"١. الأشخاص أو المجموعات المعنية",
+    s1_ph:"من المتأثر؟ ما علاقتهم بالوقائع؟",
+    s2_title:"٢. عرض الوقائع",
+    s2_ph:"صف الوقائع بترتيب زمني (ماذا/متى/أين/من).",
+    s3_title:"٣. الدول والاختصاصات",
+    s3_ph:"دولة الوقائع، الضحية، الجهة المتهمة. أي إجراءات محلية.",
+    s4_title:"٤. الانتهاكات المزعومة",
+    s4_ph:"ما الحقوق أو الحريات التي يُحتمل انتهاكها؟ (دون مصطلحات إلزامية)",
+    s5_title:"٥. الأدلة المتاحة",
+    s5_ph:"وثائق، شهادات، وسائل إعلام، تقارير، مراجع (اذكر ما هو متوفر).",
+    s6_title:"٦. الأثر الإنساني",
+    s6_ph:"الآثار الجسدية أو النفسية أو الاجتماعية أو الأسرية أو المهنية أو القانونية.",
+    s7_title:"٧. ما المطلوب",
+    s7_ph:"الاعتراف، الحماية، التحقيق، التوثيق، الوقاية…",
+    orientation:"أين يمكن تقديم شكوى أو بلاغ",
+    orientation_note:"HFH لا يرسل أي شيء ولا يوصي بأي جهة. الروابط للمعلومة فقط.",
+    export_title:"تصدير محلي",
+    export_pdf:"تصدير PDF",
+    export_docx:"تصدير DOCX",
+    export_copy:"نسخ النص",
+    export_note:"يتم إنشاء التصدير محليًا. لا رفع ولا تخزين.",
+    export_missing_libs:"التصدير غير متاح: مكتبات مفقودة داخل /docs/vendor/.",
+    export_ready:"جاهز.",
+    export_working:"جارٍ الإنشاء…",
+    export_copied:"تم نسخ النص."
   }
 };
 
-/* ================= LOGIQUE UI ================= */
-
-const switcher = document.getElementById("langSwitch");
+/* ================= INIT UI ================= */
 let currentLang = (navigator.language || "fr").slice(0,2);
 if (!LANGS[currentLang]) currentLang = "fr";
 
+const switcher = document.getElementById("langSwitch");
 Object.keys(LANGS).forEach(code => {
   const b = document.createElement("button");
+  b.type = "button";
   b.textContent = code.toUpperCase();
   b.dataset.lang = code;
-  b.onclick = () => setLang(code);
+  b.addEventListener("click", () => setLang(code));
   switcher.appendChild(b);
 });
 
@@ -407,12 +436,18 @@ function setLang(code) {
 
   document.querySelectorAll(".lang-switch button")
     .forEach(btn => btn.classList.toggle("active", btn.dataset.lang === code));
+
+  setStatus(d.export_ready);
+}
+
+function setStatus(msg) {
+  const el = document.getElementById("exportStatus");
+  if (el) el.textContent = msg || "";
 }
 
 setLang(currentLang);
 
-/* ================= MODE ANONYME ================= */
-
+/* ================= ANONYMAT ================= */
 const anonToggle = document.getElementById("anonToggle");
 const idFields = ["id_name","id_contact","id_notes"].map(id => document.getElementById(id));
 
@@ -421,15 +456,12 @@ function applyAnonState() {
     idFields.forEach(f => { f.value = ""; f.disabled = true; });
   } else {
     idFields.forEach(f => { f.disabled = false; });
-    // restaure placeholders dans la langue courante
-    setLang(currentLang);
+    setLang(currentLang); // restaure placeholders dans la langue courante
   }
 }
 anonToggle.addEventListener("change", applyAnonState);
 
-/* ================= EXPORTS LOCAUX ================= */
-/* Chargement à la demande (clic), sans backend */
-
+/* ================= EXPORTS OFFLINE ================= */
 function safeFilename(base, ext) {
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
   return `${base}-${stamp}.${ext}`;
@@ -437,8 +469,8 @@ function safeFilename(base, ext) {
 
 function collectData() {
   const d = LANGS[currentLang];
-
   const anon = !!anonToggle.checked;
+
   const identity = {
     anonymous: anon,
     name: anon ? "" : document.getElementById("id_name").value.trim(),
@@ -459,26 +491,18 @@ function collectData() {
   return { d, identity, sections };
 }
 
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    const s = document.createElement("script");
-    s.src = src;
-    s.async = true;
-    s.onload = resolve;
-    s.onerror = reject;
-    document.body.appendChild(s);
-  });
+function libsReady() {
+  const hasPDF = !!(window.jspdf && window.jspdf.jsPDF);
+  const hasDOCX = !!(window.docx && window.saveAs);
+  return { hasPDF, hasDOCX };
 }
 
-async function ensurePDFLib() {
-  if (window.jspdf && window.jspdf.jsPDF) return;
-  await loadScript("https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js");
-}
-
-async function ensureDOCXLibs() {
-  if (window.docx && window.saveAs) return;
-  await loadScript("https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js");
-  await loadScript("https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js");
+function ensureLibsOrAlert(which) {
+  const d = LANGS[currentLang];
+  const { hasPDF, hasDOCX } = libsReady();
+  if (which === "pdf" && !hasPDF) { alert(d.export_missing_libs); return false; }
+  if (which === "docx" && !hasDOCX) { alert(d.export_missing_libs); return false; }
+  return true;
 }
 
 function addPDFSection(doc, title, text, y, pageWidth, margin) {
@@ -499,15 +523,11 @@ function addPDFSection(doc, title, text, y, pageWidth, margin) {
   return y;
 }
 
-async function exportPDF() {
+function exportPDF() {
   const { d, identity, sections } = collectData();
+  if (!ensureLibsOrAlert("pdf")) return;
 
-  try {
-    await ensurePDFLib();
-  } catch (e) {
-    alert(d.export_error_offline);
-    return;
-  }
+  setStatus(d.export_working);
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
@@ -516,31 +536,23 @@ async function exportPDF() {
   let y = 15;
 
   doc.setFontSize(14);
-  doc.text(d.title, margin, y);
-  y += 8;
+  doc.text(d.title, margin, y); y += 8;
 
   doc.setFontSize(11);
-  doc.text(d.subtitle, margin, y);
-  y += 10;
+  doc.text(d.subtitle, margin, y); y += 10;
 
-  // Identité (si non anonyme et si au moins un champ)
-  const hasIdentity = !identity.anonymous && (identity.name || identity.contact || identity.notes);
   doc.setFontSize(12);
-  doc.text(d.id_title, margin, y);
-  y += 6;
+  doc.text(d.id_title, margin, y); y += 6;
 
   doc.setFontSize(11);
-  if (identity.anonymous) {
-    doc.text("—", margin, y);
-    y += 10;
-  } else if (!hasIdentity) {
-    doc.text("—", margin, y);
-    y += 10;
+  const hasIdentity = !identity.anonymous && (identity.name || identity.contact || identity.notes);
+  if (identity.anonymous || !hasIdentity) {
+    doc.text("—", margin, y); y += 10;
   } else {
     const idLines = [
-      identity.name ? `${LANGS[currentLang].id_name}: ${identity.name}` : null,
-      identity.contact ? `${LANGS[currentLang].id_contact}: ${identity.contact}` : null,
-      identity.notes ? `${LANGS[currentLang].id_notes}: ${identity.notes}` : null
+      identity.name ? `${d.id_name}: ${identity.name}` : null,
+      identity.contact ? `${d.id_contact}: ${identity.contact}` : null,
+      identity.notes ? `${d.id_notes}: ${identity.notes}` : null
     ].filter(Boolean);
 
     for (const line of idLines) {
@@ -554,67 +566,98 @@ async function exportPDF() {
     y += 6;
   }
 
-  // Sections
   for (const s of sections) {
     if (y > 270) { doc.addPage(); y = 15; }
     y = addPDFSection(doc, s.title, s.value, y, pageWidth, margin);
   }
 
   doc.save(safeFilename("HFH", "pdf"));
+  setStatus(d.export_ready);
 }
 
 async function exportDOCX() {
   const { d, identity, sections } = collectData();
+  if (!ensureLibsOrAlert("docx")) return;
 
-  try {
-    await ensureDOCXLibs();
-  } catch (e) {
-    alert(d.export_error_offline);
-    return;
-  }
+  setStatus(d.export_working);
 
   const { Document, Packer, Paragraph, TextRun } = window.docx;
-
   const children = [];
 
-  // Titre
   children.push(new Paragraph({ children: [new TextRun({ text: d.title, bold: true, size: 28 })] }));
   children.push(new Paragraph({ text: d.subtitle }));
   children.push(new Paragraph({ text: "" }));
 
-  // Identité
   children.push(new Paragraph({ children: [new TextRun({ text: d.id_title, bold: true })] }));
 
-  if (identity.anonymous) {
+  const hasIdentity = !identity.anonymous && (identity.name || identity.contact || identity.notes);
+  if (identity.anonymous || !hasIdentity) {
     children.push(new Paragraph({ text: "—" }));
   } else {
-    const hasIdentity = identity.name || identity.contact || identity.notes;
-    if (!hasIdentity) {
-      children.push(new Paragraph({ text: "—" }));
-    } else {
-      if (identity.name) children.push(new Paragraph({ text: `${LANGS[currentLang].id_name}: ${identity.name}` }));
-      if (identity.contact) children.push(new Paragraph({ text: `${LANGS[currentLang].id_contact}: ${identity.contact}` }));
-      if (identity.notes) children.push(new Paragraph({ text: `${LANGS[currentLang].id_notes}: ${identity.notes}` }));
-    }
+    if (identity.name) children.push(new Paragraph({ text: `${d.id_name}: ${identity.name}` }));
+    if (identity.contact) children.push(new Paragraph({ text: `${d.id_contact}: ${identity.contact}` }));
+    if (identity.notes) children.push(new Paragraph({ text: `${d.id_notes}: ${identity.notes}` }));
   }
-
   children.push(new Paragraph({ text: "" }));
 
-  // Sections
   for (const s of sections) {
     children.push(new Paragraph({ children: [new TextRun({ text: s.title, bold: true })] }));
     children.push(new Paragraph({ text: s.value && s.value.length ? s.value : "—" }));
     children.push(new Paragraph({ text: "" }));
   }
 
-  const doc = new Document({
-    sections: [{ children }]
-  });
-
+  const doc = new Document({ sections: [{ children }] });
   const blob = await Packer.toBlob(doc);
   window.saveAs(blob, safeFilename("HFH", "docx"));
-}
-</script>
 
+  setStatus(d.export_ready);
+}
+
+function exportCopy() {
+  const { d, identity, sections } = collectData();
+
+  const lines = [];
+  lines.push(d.title);
+  lines.push(d.subtitle);
+  lines.push("");
+  lines.push(d.id_title);
+  if (identity.anonymous || (!identity.name && !identity.contact && !identity.notes)) {
+    lines.push("—");
+  } else {
+    if (identity.name) lines.push(`${d.id_name}: ${identity.name}`);
+    if (identity.contact) lines.push(`${d.id_contact}: ${identity.contact}`);
+    if (identity.notes) lines.push(`${d.id_notes}: ${identity.notes}`);
+  }
+  lines.push("");
+
+  for (const s of sections) {
+    lines.push(s.title);
+    lines.push(s.value && s.value.length ? s.value : "—");
+    lines.push("");
+  }
+
+  navigator.clipboard.writeText(lines.join("\n")).then(() => {
+    setStatus(LANGS[currentLang].export_copied);
+    setTimeout(() => setStatus(LANGS[currentLang].export_ready), 1200);
+  });
+}
+
+/* ================= BOUTONS ================= */
+document.getElementById("btnPdf").addEventListener("click", exportPDF);
+document.getElementById("btnDocx").addEventListener("click", exportDOCX);
+document.getElementById("btnCopy").addEventListener("click", exportCopy);
+
+/* ================= VALIDATION LIBS AU CHARGEMENT ================= */
+window.addEventListener("load", () => {
+  const d = LANGS[currentLang];
+  const { hasPDF, hasDOCX } = libsReady();
+  if (!hasPDF || !hasDOCX) {
+    // On ne casse rien : on informe seulement
+    setStatus(d.export_missing_libs);
+  } else {
+    setStatus(d.export_ready);
+  }
+});
+</script>
 </body>
 </html>
