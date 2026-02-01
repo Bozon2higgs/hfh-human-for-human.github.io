@@ -20,7 +20,6 @@ textarea, input {
   font-size: 1em;
   line-height: 1.5;
 }
-
 textarea { min-height: 140px; }
 textarea::placeholder, input::placeholder { color: #777; }
 
@@ -36,7 +35,7 @@ textarea::placeholder, input::placeholder { color: #777; }
 .optional-note {
   font-size: 0.85em;
   color: #555;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .anonymous-toggle {
@@ -102,12 +101,11 @@ html[dir="rtl"] { direction: rtl; }
 <!-- IDENTITÉ -->
 <div class="card">
   <h2 data-i18n="id_title"></h2>
-
-  <div class="optional-note" data-i18n="id_optional_note"></div>
+  <div class="optional-note" data-i18n="id_optional"></div>
 
   <div class="anonymous-toggle">
-    <input type="checkbox" id="anonymousToggle">
-    <label for="anonymousToggle" data-i18n="id_anonymous"></label>
+    <input type="checkbox" id="anonToggle">
+    <label for="anonToggle" data-i18n="id_anonymous"></label>
   </div>
 
   <input id="id_name" data-i18n-ph="id_name">
@@ -115,7 +113,7 @@ html[dir="rtl"] { direction: rtl; }
   <textarea id="id_notes" data-i18n-ph="id_notes" style="margin-top:10px"></textarea>
 </div>
 
-<!-- STRUCTURE DE LA PLAINTE -->
+<!-- STRUCTURE -->
 <div class="card"><h2 data-i18n="s1_title"></h2><textarea data-i18n-ph="s1_ph"></textarea></div>
 <div class="card"><h2 data-i18n="s2_title"></h2><textarea data-i18n-ph="s2_ph"></textarea></div>
 <div class="card"><h2 data-i18n="s3_title"></h2><textarea data-i18n-ph="s3_ph"></textarea></div>
@@ -146,7 +144,8 @@ html[dir="rtl"] { direction: rtl; }
 </main>
 
 <script>
-/* ====== MULTILINGUE ====== */
+/* ===== MULTILINGUE ===== */
+
 const LANGS = {
 fr:{
 dir:"ltr",
@@ -154,11 +153,11 @@ title:"Human For Human",
 subtitle:"Outil neutre de structuration de plaintes et signalements internationaux",
 reassurance:"Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",
 id_title:"Informations d’identité",
-id_optional_note:"Cette section est entièrement facultative.",
+id_optional:"Cette section est entièrement facultative.",
 id_anonymous:"Je souhaite faire une déclaration anonyme",
 id_name:"Nom ou pseudonyme",
 id_contact:"Contact (email, téléphone, autre)",
-id_notes:"Précisions éventuelles (représentant, souhait d’anonymat, contexte…)",
+id_notes:"Précisions éventuelles (représentant, anonymat, contexte…)",
 s1_title:"1. Personnes ou groupes concernés",
 s1_ph:"Qui est concerné ? Quel est leur lien avec les faits ?",
 s2_title:"2. Exposé des faits",
@@ -176,11 +175,73 @@ s7_ph:"Reconnaissance, protection, enquête, archivage, prévention.",
 orientation:"Où transmettre une plainte ou un signalement",
 export_pdf:"Exporter en PDF",
 export_docx:"Exporter en DOCX"
+},
+
+en:{
+dir:"ltr",
+title:"Human For Human",
+subtitle:"Neutral tool for structuring international complaints and reports",
+reassurance:"Nothing is sent. Nothing is stored. Everything stays on your device.",
+id_title:"Identity information",
+id_optional:"This section is entirely optional.",
+id_anonymous:"I wish to submit an anonymous report",
+id_name:"Name or pseudonym",
+id_contact:"Contact (email, phone, other)",
+id_notes:"Additional notes (representative, anonymity, context…)",
+s1_title:"1. Persons or groups concerned",
+s1_ph:"Who is concerned? What is their relation to the facts?",
+s2_title:"2. Statement of facts",
+s2_ph:"Describe the facts chronologically.",
+s3_title:"3. Countries and jurisdictions",
+s3_ph:"Countries of events, victim, alleged perpetrator.",
+s4_title:"4. Alleged violations",
+s4_ph:"Which rights or freedoms appear to be violated?",
+s5_title:"5. Evidence available",
+s5_ph:"Documents, testimonies, media, existing reports.",
+s6_title:"6. Human impact",
+s6_ph:"Physical, psychological, social or legal consequences.",
+s7_title:"7. What is sought",
+s7_ph:"Recognition, protection, investigation, record, prevention.",
+orientation:"Where to submit a complaint or report",
+export_pdf:"Export PDF",
+export_docx:"Export DOCX"
+},
+
+ar:{
+dir:"rtl",
+title:"إنسان من أجل إنسان",
+subtitle:"أداة محايدة لتنظيم الشكاوى والتبليغات الدولية",
+reassurance:"لا يتم إرسال أي شيء ولا تخزينه. كل شيء يبقى على جهازك.",
+id_title:"معلومات الهوية",
+id_optional:"هذا القسم اختياري بالكامل.",
+id_anonymous:"أرغب في تقديم بلاغ مجهول",
+id_name:"الاسم أو الاسم المستعار",
+id_contact:"وسيلة تواصل",
+id_notes:"ملاحظات إضافية (تمثيل، سرية، سياق…)",
+s1_title:"١. الأشخاص أو المجموعات المعنية",
+s1_ph:"من المتأثر؟ ما علاقتهم بالوقائع؟",
+s2_title:"٢. عرض الوقائع",
+s2_ph:"صف الوقائع بترتيب زمني.",
+s3_title:"٣. الدول والاختصاصات",
+s3_ph:"دولة الوقائع، الضحية، الجهة المتهمة.",
+s4_title:"٤. الانتهاكات المزعومة",
+s4_ph:"ما الحقوق أو الحريات التي يبدو أنها انتهكت؟",
+s5_title:"٥. الأدلة المتاحة",
+s5_ph:"وثائق، شهادات، وسائل إعلام، تقارير.",
+s6_title:"٦. الأثر الإنساني",
+s6_ph:"الآثار الجسدية أو النفسية أو الاجتماعية أو القانونية.",
+s7_title:"٧. ما المطلوب",
+s7_ph:"الاعتراف، الحماية، التحقيق، التوثيق، الوقاية.",
+orientation:"أين يمكن تقديم شكوى أو بلاغ",
+export_pdf:"تصدير PDF",
+export_docx:"تصدير DOCX"
 }
 };
 
-let current="fr";
-const switcher=document.getElementById("langSwitch");
+/* ===== LOGIQUE ===== */
+
+let current = "fr";
+const switcher = document.getElementById("langSwitch");
 
 Object.keys(LANGS).forEach(l=>{
   const b=document.createElement("button");
@@ -200,22 +261,20 @@ function setLang(l){
   document.querySelectorAll(".lang-switch button")
     .forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
 }
+
 setLang(current);
 
-/* ====== MODE ANONYME ====== */
-const anonToggle = document.getElementById("anonymousToggle");
-const idFields = ["id_name","id_contact","id_notes"].map(id=>document.getElementById(id));
+/* ===== MODE ANONYME ===== */
 
-anonToggle.addEventListener("change", () => {
-  if (anonToggle.checked) {
-    idFields.forEach(f => {
-      f.value = "";
-      f.disabled = true;
-      f.placeholder = "";
-    });
+const anonToggle=document.getElementById("anonToggle");
+const idFields=["id_name","id_contact","id_notes"].map(id=>document.getElementById(id));
+
+anonToggle.addEventListener("change",()=>{
+  if(anonToggle.checked){
+    idFields.forEach(f=>{f.value="";f.disabled=true;});
   } else {
-    idFields.forEach(f => f.disabled = false);
-    setLang(current); // restaure placeholders
+    idFields.forEach(f=>f.disabled=false);
+    setLang(current);
   }
 });
 </script>
