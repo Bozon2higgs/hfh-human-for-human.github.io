@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="css/style.css">
 
   <style>
-    /* === Lang switch === */
     .lang-switch {
       display: flex;
       flex-wrap: wrap;
@@ -66,7 +65,22 @@
       margin-top: 6px;
     }
 
-    /* RTL support */
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .actions button {
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background: var(--blue);
+      color: white;
+      font-size: 0.95em;
+    }
+
     html[dir="rtl"] {
       direction: rtl;
     }
@@ -74,137 +88,210 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <h1 data-i18n="title">Human For Human</h1>
-      <p data-i18n="subtitle">
-        Un outil simple pour structurer des faits, sans plateforme ni collecte.
-      </p>
+<header class="site-header">
+  <div class="header-inner">
+    <h1 data-i18n="title">Human For Human</h1>
+    <p data-i18n="subtitle">
+      Un outil simple pour structurer des faits, sans plateforme ni collecte.
+    </p>
+    <div class="lang-switch" id="langSwitch"></div>
+  </div>
+</header>
 
-      <div class="lang-switch" id="langSwitch"></div>
-    </div>
-  </header>
+<main>
+  <div class="card">
+    <label for="summary" data-i18n="summary_label">Résumé des faits</label>
+    <textarea id="summary"></textarea>
+    <div class="hint" data-i18n="summary_hint"></div>
+  </div>
 
-  <main>
-    <div class="card">
-      <label for="summary" data-i18n="summary_label">Résumé des faits</label>
-      <textarea id="summary"></textarea>
-      <div class="hint" data-i18n="summary_hint">
-        En quelques lignes, ce qui s’est passé.
-      </div>
-    </div>
+  <div class="card">
+    <label for="details" data-i18n="details_label">Description détaillée</label>
+    <textarea id="details"></textarea>
+    <div class="hint" data-i18n="details_hint"></div>
+  </div>
 
-    <div class="card">
-      <label for="details" data-i18n="details_label">Description détaillée</label>
-      <textarea id="details"></textarea>
-      <div class="hint" data-i18n="details_hint">
-        Décrivez les faits avec le plus de précision possible.
-      </div>
-    </div>
-  </main>
+  <div class="card actions">
+    <button onclick="exportPDF()" data-i18n="export_pdf">Exporter en PDF</button>
+    <button onclick="exportDOCX()" data-i18n="export_docx">Exporter en DOCX</button>
+  </div>
+</main>
 
-  <script>
-    /* ========= LANG DATA ========= */
+<script>
+/* ========= LANG ========= */
 
-    const LANGS = {
-      fr: {
-        dir: "ltr",
-        title: "Human For Human",
-        subtitle: "Un outil simple pour structurer des faits, sans plateforme ni collecte.",
-        summary_label: "Résumé des faits",
-        summary_hint: "En quelques lignes, ce qui s’est passé.",
-        details_label: "Description détaillée",
-        details_hint: "Décrivez les faits avec le plus de précision possible."
-      },
-      en: {
-        dir: "ltr",
-        title: "Human For Human",
-        subtitle: "A simple tool to structure facts, without platform or data collection.",
-        summary_label: "Summary of facts",
-        summary_hint: "In a few lines, what happened.",
-        details_label: "Detailed description",
-        details_hint: "Describe the facts as precisely as possible."
-      },
-      es: {
-        dir: "ltr",
-        title: "Human For Human",
-        subtitle: "Una herramienta simple para estructurar hechos, sin plataforma ni recopilación.",
-        summary_label: "Resumen de los hechos",
-        summary_hint: "En pocas líneas, qué ocurrió.",
-        details_label: "Descripción detallada",
-        details_hint: "Describa los hechos con la mayor precisión posible."
-      },
-      ru: {
-        dir: "ltr",
-        title: "Human For Human",
-        subtitle: "Простой инструмент для структурирования фактов без платформы и сбора данных.",
-        summary_label: "Краткое изложение фактов",
-        summary_hint: "В нескольких строках — что произошло.",
-        details_label: "Подробное описание",
-        details_hint: "Опишите факты как можно точнее."
-      },
-      ar: {
-        dir: "rtl",
-        title: "إنسان من أجل إنسان",
-        subtitle: "أداة بسيطة لتنظيم الوقائع دون منصة أو جمع بيانات.",
-        summary_label: "ملخص الوقائع",
-        summary_hint: "باختصار، ماذا حدث.",
-        details_label: "الوصف التفصيلي",
-        details_hint: "صف الوقائع بأكبر قدر ممكن من الدقة."
-      },
-      zh: {
-        dir: "ltr",
-        title: "以人为本",
-        subtitle: "一个用于整理事实的简单工具，不是平台，也不收集数据。",
-        summary_label: "事实摘要",
-        summary_hint: "简要说明发生了什么。",
-        details_label: "详细描述",
-        details_hint: "尽可能详细地描述事实。"
-      },
-      uk: {
-        dir: "ltr",
-        title: "Людина для людини",
-        subtitle: "Простий інструмент для структурування фактів без платформи та збору даних.",
-        summary_label: "Короткий виклад фактів",
-        summary_hint: "Кількома рядками — що сталося.",
-        details_label: "Детальний опис",
-        details_hint: "Опишіть факти якомога точніше."
-      }
-    };
+const LANGS = {
+  fr: {
+    dir: "ltr",
+    title: "Human For Human",
+    subtitle: "Un outil simple pour structurer des faits, sans plateforme ni collecte.",
+    summary_label: "Résumé des faits",
+    summary_hint: "En quelques lignes, ce qui s’est passé.",
+    details_label: "Description détaillée",
+    details_hint: "Décrivez les faits avec le plus de précision possible.",
+    export_pdf: "Exporter en PDF",
+    export_docx: "Exporter en DOCX"
+  },
+  en: {
+    dir: "ltr",
+    title: "Human For Human",
+    subtitle: "A simple tool to structure facts, without platform or data collection.",
+    summary_label: "Summary of facts",
+    summary_hint: "In a few lines, what happened.",
+    details_label: "Detailed description",
+    details_hint: "Describe the facts as precisely as possible.",
+    export_pdf: "Export as PDF",
+    export_docx: "Export as DOCX"
+  },
+  es: {
+    dir: "ltr",
+    title: "Human For Human",
+    subtitle: "Una herramienta simple para estructurar hechos, sin plataforma ni recopilación.",
+    summary_label: "Resumen de los hechos",
+    summary_hint: "En pocas líneas, qué ocurrió.",
+    details_label: "Descripción detallada",
+    details_hint: "Describa los hechos con la mayor precisión posible.",
+    export_pdf: "Exportar a PDF",
+    export_docx: "Exportar a DOCX"
+  },
+  ru: {
+    dir: "ltr",
+    title: "Human For Human",
+    subtitle: "Простой инструмент для структурирования фактов без платформы и сбора данных.",
+    summary_label: "Краткое изложение фактов",
+    summary_hint: "В нескольких строках — что произошло.",
+    details_label: "Подробное описание",
+    details_hint: "Опишите факты как можно точнее.",
+    export_pdf: "Экспорт в PDF",
+    export_docx: "Экспорт в DOCX"
+  },
+  ar: {
+    dir: "rtl",
+    title: "إنسان من أجل إنسان",
+    subtitle: "أداة بسيطة لتنظيم الوقائع دون منصة أو جمع بيانات.",
+    summary_label: "ملخص الوقائع",
+    summary_hint: "باختصار، ماذا حدث.",
+    details_label: "الوصف التفصيلي",
+    details_hint: "صف الوقائع بأكبر قدر ممكن من الدقة.",
+    export_pdf: "تصدير PDF",
+    export_docx: "تصدير DOCX"
+  },
+  zh: {
+    dir: "ltr",
+    title: "以人为本",
+    subtitle: "一个用于整理事实的简单工具，不是平台，也不收集数据。",
+    summary_label: "事实摘要",
+    summary_hint: "简要说明发生了什么。",
+    details_label: "详细描述",
+    details_hint: "尽可能详细地描述事实。",
+    export_pdf: "导出 PDF",
+    export_docx: "导出 DOCX"
+  },
+  uk: {
+    dir: "ltr",
+    title: "Людина для людини",
+    subtitle: "Простий інструмент для структурування фактів без платформи та збору даних.",
+    summary_label: "Короткий виклад фактів",
+    summary_hint: "Кількома рядками — що сталося.",
+    details_label: "Детальний опис",
+    details_hint: "Опишіть факти якомога точніше.",
+    export_pdf: "Експорт у PDF",
+    export_docx: "Експорт у DOCX"
+  }
+};
 
-    const DEFAULT_LANG = (navigator.language || "fr").slice(0, 2);
-    let currentLang = LANGS[DEFAULT_LANG] ? DEFAULT_LANG : "fr";
+const DEFAULT_LANG = (navigator.language || "fr").slice(0,2);
+let currentLang = LANGS[DEFAULT_LANG] ? DEFAULT_LANG : "fr";
 
-    /* ========= UI ========= */
+const switchContainer = document.getElementById("langSwitch");
 
-    const switchContainer = document.getElementById("langSwitch");
+Object.keys(LANGS).forEach(code => {
+  const btn = document.createElement("button");
+  btn.textContent = code.toUpperCase();
+  btn.dataset.lang = code;
+  btn.onclick = () => setLang(code);
+  switchContainer.appendChild(btn);
+});
 
-    Object.keys(LANGS).forEach(code => {
-      const btn = document.createElement("button");
-      btn.textContent = code.toUpperCase();
-      btn.onclick = () => setLang(code);
-      btn.dataset.lang = code;
-      switchContainer.appendChild(btn);
-    });
+function setLang(lang) {
+  currentLang = lang;
+  const data = LANGS[lang];
 
-    function setLang(lang) {
-      currentLang = lang;
-      const data = LANGS[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = data.dir;
 
-      document.documentElement.lang = lang;
-      document.documentElement.dir = data.dir;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (data[key]) el.textContent = data[key];
+  });
 
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.dataset.i18n;
-        if (data[key]) el.textContent = data[key];
-      });
+  document.querySelectorAll(".lang-switch button")
+    .forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
+}
 
-      document
-        .querySelectorAll(".lang-switch button")
-        .forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
-    }
+setLang(currentLang);
 
-    setLang(currentLang);
-  </script>
+/* ========= EXPORTS ========= */
+
+function getContent() {
+  return {
+    title: LANGS[currentLang].title,
+    summary: document.getElementById("summary").value,
+    details: document.getElementById("details").value
+  };
+}
+
+async function exportPDF() {
+  if (!window.jspdf) {
+    await loadScript("https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js");
+  }
+
+  const { jsPDF } = window.jspdf;
+  const data = getContent();
+
+  const doc = new jsPDF();
+  doc.setFontSize(14);
+  doc.text(data.title, 10, 15);
+  doc.setFontSize(11);
+  doc.text(data.summary || "", 10, 30);
+  doc.text(data.details || "", 10, 60);
+
+  doc.save("HFH.pdf");
+}
+
+async function exportDOCX() {
+  if (!window.docx) {
+    await loadScript("https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js");
+    await loadScript("https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js");
+  }
+
+  const { Document, Packer, Paragraph } = window.docx;
+  const data = getContent();
+
+  const doc = new Document({
+    sections: [{
+      children: [
+        new Paragraph({ text: data.title, bold: true }),
+        new Paragraph(data.summary || ""),
+        new Paragraph(""),
+        new Paragraph(data.details || "")
+      ]
+    }]
+  });
+
+  const blob = await Packer.toBlob(doc);
+  saveAs(blob, "HFH.docx");
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.body.appendChild(s);
+  });
+}
+</script>
 </body>
 </html>
