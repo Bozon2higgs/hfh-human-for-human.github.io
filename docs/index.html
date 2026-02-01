@@ -1,181 +1,191 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>HFH — Human For Human</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>HFH — Human For Human</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
 
-  <style>
-    main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
-    .card { background: var(--card); padding: 18px; border-radius: var(--radius); margin-bottom: 20px; }
-    h2 { margin-top: 0; }
-    textarea, input {
-      width: 100%; padding: 12px; font-size: 1em;
-      border-radius: 6px; border: 1px solid #ccc;
-      font-family: inherit; line-height: 1.5;
-    }
-    textarea { min-height: 140px; }
-    textarea::placeholder { color: #777; }
-    .reassurance {
-      background: #f3f6fa;
-      border-left: 4px solid var(--blue);
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 0.9em;
-      margin-bottom: 20px;
-    }
-    .links a {
-      display: block;
-      margin-bottom: 6px;
-    }
-    .actions button {
-      padding: 12px 16px;
-      border-radius: 6px;
-      border: none;
-      background: var(--blue);
-      color: white;
-      cursor: pointer;
-      font-size: 1em;
-      margin-right: 10px;
-    }
-  </style>
+<style>
+main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+.card { background: var(--card); padding: 18px; border-radius: var(--radius); margin-bottom: 20px; }
+h2 { margin-top: 0; }
+textarea {
+  width: 100%; min-height: 140px; padding: 12px;
+  border-radius: 6px; border: 1px solid #ccc;
+  font-family: inherit; line-height: 1.5;
+}
+textarea::placeholder { color: #777; }
+.reassurance {
+  background: #f3f6fa; border-left: 4px solid var(--blue);
+  padding: 12px; border-radius: 6px; font-size: 0.9em;
+  margin-bottom: 20px;
+}
+.actions button {
+  padding: 12px 16px; border-radius: 6px; border: none;
+  background: var(--blue); color: white; cursor: pointer;
+  font-size: 1em; margin-right: 10px;
+}
+.lang-switch { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.lang-switch button {
+  border: 1px solid #ccc; background: white;
+  padding: 6px 10px; border-radius: 6px; cursor: pointer;
+}
+.lang-switch button.active {
+  background: var(--blue); color: white; border-color: var(--blue);
+}
+html[dir="rtl"] { direction: rtl; }
+</style>
 </head>
 
 <body>
 
 <header class="site-header">
   <div class="header-inner">
-    <h1>Human For Human</h1>
-    <p>Outil neutre de structuration de faits à portée juridique et internationale</p>
+    <h1 data-i18n="title"></h1>
+    <p data-i18n="subtitle"></p>
+    <div class="lang-switch" id="langSwitch"></div>
   </div>
 </header>
 
 <main>
 
-<div class="reassurance">
-  HFH ne transmet rien.  
-  Aucun compte. Aucun stockage.  
-  Tout reste sur votre appareil.
-</div>
+<div class="reassurance" data-i18n="reassurance"></div>
 
-<!-- 1. IDENTIFICATION FACTUELLE -->
 <div class="card">
-  <h2>1. Personnes / groupes concernés</h2>
-  <textarea placeholder=
-"Qui est concerné par les faits ?
-(personne, groupe, communauté)
-
-Quel est leur lien avec les faits ?
-(victime directe, témoin, proche…)
-
-Aucune donnée d’identité n’est obligatoire."></textarea>
+  <h2 data-i18n="s1_title"></h2>
+  <textarea data-i18n-ph="s1_ph"></textarea>
 </div>
 
-<!-- 2. EXPOSE DES FAITS -->
 <div class="card">
-  <h2>2. Exposé des faits</h2>
-  <textarea placeholder=
-"Décrivez les faits de manière chronologique.
-
-Que s’est-il passé ?
-Quand ? Où ?
-Qui était impliqué ?
-Les faits se sont-ils répétés ?
-
-Écrivez librement, sans jargon."></textarea>
+  <h2 data-i18n="s2_title"></h2>
+  <textarea data-i18n-ph="s2_ph"></textarea>
 </div>
 
-<!-- 3. PAYS ET JURIDICTIONS -->
 <div class="card">
-  <h2>3. Pays et juridictions concernées</h2>
-  <textarea placeholder=
-"Pays où les faits ont eu lieu :
-Pays de la personne concernée :
-Pays de l’auteur présumé (si différent) :
-
-Y a-t-il eu des démarches locales ?
-(police, justice, administration…)"></textarea>
+  <h2 data-i18n="s3_title"></h2>
+  <textarea data-i18n-ph="s3_ph"></textarea>
 </div>
 
-<!-- 4. ATTEINTES ALLEGUEES -->
 <div class="card">
-  <h2>4. Atteintes alléguées</h2>
-  <textarea placeholder=
-"Quels droits ou libertés semblent avoir été atteints ?
-
-(exemples : détention arbitraire, violences, discrimination,
-atteinte à la dignité, liberté d’expression, droit à la vie…)
-
-Il n’est pas nécessaire de citer un texte juridique."></textarea>
+  <h2 data-i18n="s4_title"></h2>
+  <textarea data-i18n-ph="s4_ph"></textarea>
 </div>
 
-<!-- 5. PREUVES DISPONIBLES -->
 <div class="card">
-  <h2>5. Éléments de preuve disponibles</h2>
-  <textarea placeholder=
-"Quels éléments existent ou pourraient exister ?
-
-(témoignages, documents, photos, vidéos,
-certificats, messages, rapports, articles…)
-
-Indiquez seulement ce qui existe."></textarea>
+  <h2 data-i18n="s5_title"></h2>
+  <textarea data-i18n-ph="s5_ph"></textarea>
 </div>
 
-<!-- 6. IMPACT -->
 <div class="card">
-  <h2>6. Impact sur la personne ou le groupe</h2>
-  <textarea placeholder=
-"Conséquences physiques, psychologiques,
-sociales, familiales ou professionnelles.
-
-Décrivez l’impact humain des faits."></textarea>
+  <h2 data-i18n="s6_title"></h2>
+  <textarea data-i18n-ph="s6_ph"></textarea>
 </div>
 
-<!-- 7. CE QUI EST RECHERCHE -->
 <div class="card">
-  <h2>7. Ce que la personne cherche</h2>
-  <textarea placeholder=
-"Que souhaitez-vous principalement ?
-
-(reconnaissance des faits,
-protection,
-enquête indépendante,
-archivage,
-prévention de nouvelles violations…)"></textarea>
+  <h2 data-i18n="s7_title"></h2>
+  <textarea data-i18n-ph="s7_ph"></textarea>
 </div>
 
-<!-- 8. ORIENTATION -->
-<div class="card">
-  <h2>Où transmettre une plainte ou un signalement</h2>
-  <div class="links">
-    <strong>Institutions internationales :</strong>
-    <a href="https://www.ohchr.org" target="_blank">Haut-Commissariat des Nations Unies aux droits de l’homme (OHCHR)</a>
-    <a href="https://www.ohchr.org/en/special-procedures-human-rights-council" target="_blank">Procédures spéciales / Rapporteurs ONU</a>
-    <a href="https://www.ohchr.org/en/treaty-bodies" target="_blank">Comités des traités internationaux</a>
-
-    <br><strong>ONG & documentation :</strong>
-    <a href="https://www.amnesty.org" target="_blank">Amnesty International</a>
-    <a href="https://www.hrw.org" target="_blank">Human Rights Watch</a>
-    <a href="https://www.fidh.org" target="_blank">FIDH</a>
-  </div>
-  <p style="font-size:0.9em;margin-top:10px;">
-    HFH ne recommande aucune entité en particulier.  
-    Ces liens sont fournis à titre informatif.
-  </p>
-</div>
-
-<!-- EXPORT -->
 <div class="card actions">
-  <button onclick="exportPDF()">Exporter en PDF</button>
-  <button onclick="exportDOCX()">Exporter en DOCX</button>
+  <button data-i18n="export_pdf"></button>
+  <button data-i18n="export_docx"></button>
 </div>
 
 </main>
 
 <script>
-function exportPDF(){alert("Export PDF : même logique que version précédente (conservée)");}
-function exportDOCX(){alert("Export DOCX : même logique que version précédente (conservée)");}
+const LANGS = {
+fr:{
+dir:"ltr",
+title:"Human For Human",
+subtitle:"Outil neutre de structuration de faits à portée internationale",
+reassurance:"Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",
+s1_title:"1. Personnes ou groupes concernés",
+s1_ph:"Qui est concerné ? (personne, groupe, communauté)\nQuel est leur lien avec les faits ?",
+s2_title:"2. Exposé des faits",
+s2_ph:"Décrivez les faits de manière chronologique.\nQue s’est-il passé ? Quand ? Où ?",
+s3_title:"3. Pays et juridictions",
+s3_ph:"Pays des faits.\nPays de la victime.\nPays de l’auteur présumé.",
+s4_title:"4. Atteintes alléguées",
+s4_ph:"Quels droits ou libertés semblent avoir été atteints ?\nAucun jargon requis.",
+s5_title:"5. Éléments de preuve",
+s5_ph:"Quels éléments existent ? (documents, témoignages, médias…)",
+s6_title:"6. Impact humain",
+s6_ph:"Conséquences physiques, psychologiques, sociales, juridiques.",
+s7_title:"7. Ce qui est recherché",
+s7_ph:"Reconnaissance, protection, enquête, archivage, prévention…",
+export_pdf:"Exporter en PDF",
+export_docx:"Exporter en DOCX"
+},
+en:{
+dir:"ltr",
+title:"Human For Human",
+subtitle:"Neutral tool to structure facts for international reporting",
+reassurance:"Nothing is sent. Nothing is stored. Everything stays on your device.",
+s1_title:"1. Persons or groups concerned",
+s1_ph:"Who is concerned?\nWhat is their relation to the facts?",
+s2_title:"2. Statement of facts",
+s2_ph:"Describe the facts chronologically.\nWhat happened? When? Where?",
+s3_title:"3. Countries and jurisdictions",
+s3_ph:"Country of events.\nCountry of victim.\nCountry of alleged perpetrator.",
+s4_title:"4. Alleged violations",
+s4_ph:"Which rights or freedoms appear to be violated?",
+s5_title:"5. Evidence available",
+s5_ph:"What evidence exists? (documents, testimonies, media…)",
+s6_title:"6. Human impact",
+s6_ph:"Physical, psychological, social or legal consequences.",
+s7_title:"7. What is sought",
+s7_ph:"Recognition, protection, investigation, record, prevention…",
+export_pdf:"Export PDF",
+export_docx:"Export DOCX"
+},
+ar:{
+dir:"rtl",
+title:"إنسان من أجل إنسان",
+subtitle:"أداة محايدة لتنظيم الوقائع لأغراض دولية",
+reassurance:"لا يتم إرسال أي شيء. لا يتم تخزين أي شيء. كل شيء يبقى على جهازك.",
+s1_title:"١. الأشخاص أو المجموعات المعنية",
+s1_ph:"من المتأثر بالوقائع؟\nما علاقتهم بها؟",
+s2_title:"٢. عرض الوقائع",
+s2_ph:"صف الوقائع بترتيب زمني.\nماذا حدث؟ متى؟ أين؟",
+s3_title:"٣. الدول والاختصاصات",
+s3_ph:"دولة وقوع الأحداث.\nدولة الضحية.\nدولة الجهة المتهمة.",
+s4_title:"٤. الانتهاكات المزعومة",
+s4_ph:"ما الحقوق أو الحريات التي يبدو أنها انتُهكت؟",
+s5_title:"٥. الأدلة المتوفرة",
+s5_ph:"ما الأدلة الموجودة؟ (وثائق، شهادات، وسائل إعلام…)",
+s6_title:"٦. الأثر الإنساني",
+s6_ph:"الآثار الجسدية أو النفسية أو الاجتماعية أو القانونية.",
+s7_title:"٧. ما الذي يُطلب",
+s7_ph:"الاعتراف، الحماية، التحقيق، التوثيق، الوقاية…",
+export_pdf:"تصدير PDF",
+export_docx:"تصدير DOCX"
+}
+};
+
+let current="fr";
+
+const switcher=document.getElementById("langSwitch");
+Object.keys(LANGS).forEach(l=>{
+const b=document.createElement("button");
+b.textContent=l.toUpperCase();
+b.onclick=()=>setLang(l);
+b.dataset.lang=l;
+switcher.appendChild(b);
+});
+
+function setLang(l){
+current=l;
+const d=LANGS[l];
+document.documentElement.lang=l;
+document.documentElement.dir=d.dir;
+document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=d[e.dataset.i18n]);
+document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.placeholder=d[e.dataset.i18nPh]);
+document.querySelectorAll(".lang-switch button")
+.forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+}
+setLang(current);
 </script>
 
 </body>
