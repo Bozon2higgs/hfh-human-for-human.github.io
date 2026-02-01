@@ -1,13 +1,134 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HFH — Human For Human</title>
-</head>
+/* ==============================
+   HFH — Human For Human
+   Style stable / minimal / lisible
+   ============================== */
 
-<body>
-  <h1>HFH — Human For Human</h1>
-  <p>Si tu vois ce texte, GitHub Pages fonctionne depuis /docs.</p>
-</body>
-</html>
+:root {
+  --blue-dark: #0b1f44;
+  --blue: #12356b;
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* HEADER */
+
+.site-header {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+  color: #fff;
+  padding: 24px;
+}
+
+.brand {
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  width: 64px;
+  height: auto;
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.brand-text p {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* MAIN */
+
+.container {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+/* FORM */
+
+label {
+  display: block;
+  margin-top: 16px;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ACTIONS */
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #9ca3af;
+  color: #fff;
+  cursor: not-allowed;
+  font-size: 0.9rem;
+}
+
+/* FOOTER */
+
+.site-footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* NOTE */
+
+.note {
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
