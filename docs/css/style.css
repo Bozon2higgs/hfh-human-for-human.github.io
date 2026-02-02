@@ -118,4 +118,49 @@ main {
     --radius: 8px;
   }
 }
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #020617;
+    color: var(--text);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  textarea,
+  input {
+    background: #020617;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  textarea::placeholder,
+  input::placeholder {
+    color: var(--muted);
+  }
+
+  textarea:focus,
+  input:focus {
+    outline: none;
+    border-color: var(--blue);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .small-note,
+  .optional-note,
+  .actions .status {
+    color: var(--muted);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .lang-switch button {
+    background: #020617;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .lang-switch button.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+  }
+}
 
