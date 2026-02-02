@@ -3,172 +3,83 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <title>HFH — Human For Human</title>
+
+<!-- PWA / META -->
 <link rel="icon" href="favicon.png" type="image/png" />
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#020617" />
 
-
-<!-- FAVICON -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-
+<!-- CSS -->
 <link rel="stylesheet" href="css/style.css" />
 
-<!-- OFFLINE BUNDLE -->
+<!-- OFFLINE LIBS -->
 <script defer src="vendor/jspdf.umd.min.js"></script>
 <script defer src="vendor/docx.umd.js"></script>
 <script defer src="vendor/FileSaver.min.js"></script>
-
-<style>
-main { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
-.card { background: var(--card); padding: 20px; border-radius: var(--radius); margin-bottom: 22px; }
-h2 { margin-top: 0; }
-
-textarea, input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-family: inherit;
-  font-size: 1em;
-  line-height: 1.5;
-}
-textarea { min-height: 140px; }
-textarea::placeholder, input::placeholder { color: #777; }
-
-.reassurance {
-  background: #f3f6fa;
-  border-left: 4px solid var(--blue);
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 0.95em;
-  margin-bottom: 20px;
-}
-
-.optional-note { font-size: 0.85em; color: #555; margin-bottom: 10px; }
-.anonymous-toggle { display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:0.95em; }
-
-.lang-switch { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
-.lang-switch button { border:1px solid #ccc; background:white; padding:6px 10px; border-radius:6px; cursor:pointer; }
-.lang-switch button.active { background: var(--blue); color:white; border-color: var(--blue); }
-
-.actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-.actions button {
-  padding: 12px 16px;
-  border-radius: 6px;
-  border: none;
-  background: var(--blue);
-  color: white;
-  cursor: pointer;
-  font-size: 1em;
-}
-.actions button.secondary { background: #2f3a4a; }
-.actions .status { font-size: 0.9em; color: #555; }
-
-.links a { display:block; margin-bottom:6px; }
-.small-note { font-size:0.9em; color:#555; margin-top:10px; }
-
-html[dir="rtl"] { direction: rtl; }
-
-.site-header {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:32px 16px 16px;
-  text-align:center;
-}
-.site-header img {
-  max-width:280px;
-  width:100%;
-  height:auto;
-  margin-bottom:16px;
-}
-
-.site-footer {
-  margin-top:48px;
-  padding:24px 16px;
-  text-align:center;
-  opacity:0.7;
-}
-.site-footer img {
-  max-width:120px;
-  width:100%;
-  height:auto;
-}
-</style>
 </head>
 
 <body>
 
-<header>
-
-<main>
-  <div class="reassurance" data-i18n="reassurance"></div>
-
-  <div class="card">
-    <h2 data-i18n="id_title"></h2>
-    <div class="optional-note" data-i18n="id_optional"></div>
-
-    <div class="anonymous-toggle">
-      <input type="checkbox" id="anonToggle" />
-      <label for="anonToggle" data-i18n="id_anonymous"></label>
-    </div>
-
-    <input id="id_name" data-i18n-ph="id_name" />
-    <input id="id_contact" data-i18n-ph="id_contact" style="margin-top:10px" />
-    <textarea id="id_notes" data-i18n-ph="id_notes" style="margin-top:10px"></textarea>
-  </div>
-
-  <div class="card"><h2 data-i18n="s1_title"></h2><textarea id="s1" data-i18n-ph="s1_ph"></textarea></div>
-  <div class="card"><h2 data-i18n="s2_title"></h2><textarea id="s2" data-i18n-ph="s2_ph"></textarea></div>
-  <div class="card"><h2 data-i18n="s3_title"></h2><textarea id="s3" data-i18n-ph="s3_ph"></textarea></div>
-  <div class="card"><h2 data-i18n="s4_title"></h2><textarea id="s4" data-i18n-ph="s4_ph"></textarea></div>
-  <div class="card"><h2 data-i18n="s5_title"></h2><textarea id="s5" data-i18n-ph="s5_ph"></textarea></div>
-  <div class="card"><h2 data-i18n="s6_title"></h2><textarea id="s6" data-i18n-ph="s6_ph"></textarea></div>
-  <div class="card"><h2 data-i18n="s7_title"></h2><textarea id="s7" data-i18n-ph="s7_ph"></textarea></div>
-
-  <div class="card">
-    <h2 data-i18n="orientation"></h2>
-    <div class="links">
-      <a href="https://www.ohchr.org" target="_blank">UN OHCHR</a>
-      <a href="https://www.amnesty.org" target="_blank">Amnesty International</a>
-      <a href="https://www.hrw.org" target="_blank">Human Rights Watch</a>
-    </div>
-    <div class="small-note" data-i18n="orientation_note"></div>
-  </div>
-
-  <div class="card">
-    <h2 data-i18n="export_title"></h2>
-    <div class="actions">
-      <button id="btnPdf" type="button" data-i18n="export_pdf"></button>
-      <button id="btnDocx" type="button" data-i18n="export_docx"></button>
-      <button id="btnCopy" type="button" class="secondary" data-i18n="export_copy"></button>
-      <span class="status" id="exportStatus"></span>
-    </div>
-    <div class="small-note" data-i18n="export_note"></div>
-  </div>
-</main>
-
 <header class="site-header">
   <div class="header-inner">
     <img
-      src="assets/logo/logo_hfh_light.png"
+      src="assets/logo/logo_hfh.png"
       alt="HFH — Human For Human"
       class="site-logo"
+      loading="eager"
     />
-    <h1 data-i18n="title"></h1>
-    <p data-i18n="subtitle"></p>
+    <div class="header-text">
+      <h1 data-i18n="title"></h1>
+      <p data-i18n="subtitle"></p>
+    </div>
     <div class="lang-switch" id="langSwitch"></div>
   </div>
 </header>
 
+<main>
 
+  <div class="reassurance" data-i18n="reassurance"></div>
 
-<script>
-/* SCRIPT MULTILINGUE + EXPORT : IDENTIQUE À TA VERSION */
-</script>
+  <!-- IDENTITÉ -->
+  <section class="card">
+    <h2 data-i18n="id_title"></h2>
+    <p class="optional-note" data-i18n="id_optional"></p>
 
+    <label class="anonymous-toggle">
+      <input type="checkbox" id="anonToggle" />
+      <span data-i18n="id_anonymous"></span>
+    </label>
+
+    <input id="id_name" data-i18n-ph="id_name" />
+    <input id="id_contact" data-i18n-ph="id_contact" />
+    <textarea id="id_notes" data-i18n-ph="id_notes"></textarea>
+  </section>
+
+  <!-- STRUCTURE -->
+  <section class="card"><h2 data-i18n="s1_title"></h2><textarea id="s1" data-i18n-ph="s1_ph"></textarea></section>
+  <section class="card"><h2 data-i18n="s2_title"></h2><textarea id="s2" data-i18n-ph="s2_ph"></textarea></section>
+  <section class="card"><h2 data-i18n="s3_title"></h2><textarea id="s3" data-i18n-ph="s3_ph"></textarea></section>
+  <section class="card"><h2 data-i18n="s4_title"></h2><textarea id="s4" data-i18n-ph="s4_ph"></textarea></section>
+  <section class="card"><h2 data-i18n="s5_title"></h2><textarea id="s5" data-i18n-ph="s5_ph"></textarea></section>
+  <section class="card"><h2 data-i18n="s6_title"></h2><textarea id="s6" data-i18n-ph="s6_ph"></textarea></section>
+  <section class="card"><h2 data-i18n="s7_title"></h2><textarea id="s7" data-i18n-ph="s7_ph"></textarea></section>
+
+  <!-- EXPORT -->
+  <section class="card">
+    <h2 data-i18n="export_title"></h2>
+    <div class="actions">
+      <button id="btnPdf" data-i18n="export_pdf"></button>
+      <button id="btnDocx" data-i18n="export_docx"></button>
+      <button id="btnCopy" class="secondary" data-i18n="export_copy"></button>
+      <span class="status" id="exportStatus"></span>
+    </div>
+    <p class="small-note" data-i18n="export_note"></p>
+  </section>
+
+</main>
+
+<script src="js/app.js"></script>
 </body>
 </html>
