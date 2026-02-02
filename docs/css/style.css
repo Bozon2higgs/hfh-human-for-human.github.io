@@ -83,4 +83,25 @@ main {
   color: #555;
   font-size: 1rem;
 }
+/* ================= DARK MODE LOGO ================= */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0f172a;
+    color: #e5e7eb;
+  }
+
+  .site-header {
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .site-logo {
+    content: url("../assets/logo/logo_hfh_dark.png");
+  }
+
+  .site-header p {
+    color: #cbd5f5;
+  }
+}
 
