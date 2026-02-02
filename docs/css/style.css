@@ -104,4 +104,18 @@ main {
     color: #cbd5f5;
   }
 }
+/* ================= DARK MODE SYSTEM ================= */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #020617;
+    --card: #020617;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --border: #1e293b;
+    --input: #020617;
+    --blue: #3b82f6;
+    --radius: 8px;
+  }
+}
 
