@@ -1,115 +1,214 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HFH — Human For Human</title>
-
-<!-- FAVICON + PWA -->
-<link rel="icon" href="favicon.png" type="image/png" />
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#020617" />
-
-<!-- CSS -->
-<link rel="stylesheet" href="css/style.css" />
-
-<!-- OFFLINE LIBS -->
-<script defer src="vendor/jspdf.umd.min.js"></script>
-<script defer src="vendor/docx.umd.js"></script>
-<script defer src="vendor/FileSaver.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <img
-      src="assets/logo/logo_hfh.png"
-      alt="HFH — Human For Human"
-      class="site-logo"
-    />
-    <div class="header-text">
-      <h1 data-i18n="title"></h1>
-      <p data-i18n="subtitle"></p>
-    </div>
-    <div class="lang-switch" id="langSwitch"></div>
+<header>
+  <h1 id="title">Human For Human</h1>
+  <p id="subtitle">Outil simple pour structurer un signalement en droits humains</p>
+
+  <div id="langSwitch">
+    <button onclick="setLang('fr')">FR</button>
+    <button onclick="setLang('en')">EN</button>
+    <button onclick="setLang('es')">ES</button>
+    <button onclick="setLang('ru')">RU</button>
+    <button onclick="setLang('uk')">UK</button>
+    <button onclick="setLang('ar')">AR</button>
+    <button onclick="setLang('zh')">ZH</button>
   </div>
 </header>
 
 <main>
 
-  <div class="reassurance" data-i18n="reassurance"></div>
+<section class="intro" id="intro"></section>
 
-  <section class="card">
-    <h2 data-i18n="id_title"></h2>
-    <p class="optional-note" data-i18n="id_optional"></p>
+<section class="block">
+  <h2 id="s1_title"></h2>
+  <p class="help" id="s1_help"></p>
+  <textarea></textarea>
+</section>
 
-    <label class="anonymous-toggle">
-      <input type="checkbox" id="anonToggle" />
-      <span data-i18n="id_anonymous"></span>
-    </label>
+<section class="block">
+  <h2 id="s2_title"></h2>
+  <p class="help" id="s2_help"></p>
+  <textarea></textarea>
+</section>
 
-    <input id="id_name" data-i18n-ph="id_name" />
-    <input id="id_contact" data-i18n-ph="id_contact" />
-    <textarea id="id_notes" data-i18n-ph="id_notes"></textarea>
-  </section>
+<section class="block">
+  <h2 id="s3_title"></h2>
+  <p class="help" id="s3_help"></p>
+  <textarea></textarea>
+</section>
 
-  <section class="card"><h2 data-i18n="s1_title"></h2><textarea id="s1" data-i18n-ph="s1_ph"></textarea></section>
-  <section class="card"><h2 data-i18n="s2_title"></h2><textarea id="s2" data-i18n-ph="s2_ph"></textarea></section>
-  <section class="card"><h2 data-i18n="s3_title"></h2><textarea id="s3" data-i18n-ph="s3_ph"></textarea></section>
-  <section class="card"><h2 data-i18n="s4_title"></h2><textarea id="s4" data-i18n-ph="s4_ph"></textarea></section>
-  <section class="card"><h2 data-i18n="s5_title"></h2><textarea id="s5" data-i18n-ph="s5_ph"></textarea></section>
-  <section class="card"><h2 data-i18n="s6_title"></h2><textarea id="s6" data-i18n-ph="s6_ph"></textarea></section>
-  <section class="card"><h2 data-i18n="s7_title"></h2><textarea id="s7" data-i18n-ph="s7_ph"></textarea></section>
+<section class="block">
+  <h2 id="s4_title"></h2>
+  <p class="help" id="s4_help"></p>
+  <textarea></textarea>
+</section>
 
-  <section class="card">
-    <h2 data-i18n="export_title"></h2>
-    <div class="actions">
-      <button id="btnPdf" data-i18n="export_pdf"></button>
-      <button id="btnDocx" data-i18n="export_docx"></button>
-      <button id="btnCopy" class="secondary" data-i18n="export_copy"></button>
-      <span class="status" id="exportStatus"></span>
-    </div>
-    <p class="small-note" data-i18n="export_note"></p>
-  </section>
+<section class="block">
+  <h2 id="s5_title"></h2>
+  <p class="help" id="s5_help"></p>
+  <textarea></textarea>
+</section>
+
+<section class="block">
+  <button onclick="copyAll()" id="copyBtn"></button>
+  <span id="status"></span>
+</section>
 
 </main>
 
 <script>
-/* ================= MULTILINGUE ================= */
-
-const LANGS = {
-  fr:{title:"Human For Human",subtitle:"Outil neutre de structuration de plaintes et signalements internationaux",reassurance:"Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",id_title:"Informations d’identité",id_optional:"Cette section est facultative.",id_anonymous:"Déclaration anonyme",id_name:"Nom ou pseudonyme",id_contact:"Contact",id_notes:"Notes",s1_title:"1. Personnes concernées",s1_ph:"",s2_title:"2. Faits",s2_ph:"",s3_title:"3. Pays / juridictions",s3_ph:"",s4_title:"4. Atteintes",s4_ph:"",s5_title:"5. Preuves",s5_ph:"",s6_title:"6. Impact humain",s6_ph:"",s7_title:"7. Ce qui est recherché",s7_ph:"",export_title:"Exports locaux",export_pdf:"Exporter PDF",export_docx:"Exporter DOCX",export_copy:"Copier texte",export_note:"Généré localement."},
-  en:{title:"Human For Human",subtitle:"Neutral tool for structuring international complaints",reassurance:"Nothing is sent or stored.",id_title:"Identity",id_optional:"Optional section.",id_anonymous:"Anonymous report",id_name:"Name or alias",id_contact:"Contact",id_notes:"Notes",s1_title:"1. Persons concerned",s1_ph:"",s2_title:"2. Facts",s2_ph:"",s3_title:"3. Countries",s3_ph:"",s4_title:"4. Violations",s4_ph:"",s5_title:"5. Evidence",s5_ph:"",s6_title:"6. Human impact",s6_ph:"",s7_title:"7. Expected outcome",s7_ph:"",export_title:"Local exports",export_pdf:"Export PDF",export_docx:"Export DOCX",export_copy:"Copy text",export_note:"Generated locally."}
+const T = {
+fr:{
+title:"Human For Human",
+subtitle:"Outil simple pour structurer un signalement en droits humains",
+intro:"Rien n’est envoyé. Rien n’est stocké. Vous pouvez remplir ce formulaire à votre rythme.",
+s1_title:"1. Qui est concerné ?",
+s1_help:"Personne, groupe, communauté ou organisation.",
+s2_title:"2. Que s’est-il passé ?",
+s2_help:"Décrivez les faits simplement : quoi, quand, où.",
+s3_title:"3. Où cela s’est-il produit ?",
+s3_help:"Pays, région, juridiction si connue.",
+s4_title:"4. Pourquoi est-ce un problème ?",
+s4_help:"Atteinte à des droits, abus, violence, discrimination.",
+s5_title:"5. Ce que vous attendez",
+s5_help:"Reconnaissance, aide, protection, documentation.",
+copy:"Copier tout le texte",
+copied:"Texte copié."
+},
+en:{
+title:"Human For Human",
+subtitle:"Simple tool to structure a human rights report",
+intro:"Nothing is sent. Nothing is stored. Take your time to fill this form.",
+s1_title:"1. Who is concerned?",
+s1_help:"Person, group, community or organisation.",
+s2_title:"2. What happened?",
+s2_help:"Describe the facts: what, when, where.",
+s3_title:"3. Where did it happen?",
+s3_help:"Country, region, jurisdiction if known.",
+s4_title:"4. Why is this a problem?",
+s4_help:"Rights violation, abuse, violence, discrimination.",
+s5_title:"5. What do you expect?",
+s5_help:"Recognition, help, protection, documentation.",
+copy:"Copy all text",
+copied:"Text copied."
+},
+es:{
+title:"Human For Human",
+subtitle:"Herramienta simple para estructurar una denuncia",
+intro:"Nada se envía ni se almacena. Puede completar este formulario con calma.",
+s1_title:"1. ¿Quién está afectado?",
+s1_help:"Persona, grupo, comunidad u organización.",
+s2_title:"2. ¿Qué ocurrió?",
+s2_help:"Describa los hechos: qué, cuándo, dónde.",
+s3_title:"3. ¿Dónde ocurrió?",
+s3_help:"País, región, jurisdicción si se conoce.",
+s4_title:"4. ¿Por qué es un problema?",
+s4_help:"Violación de derechos, abuso, violencia.",
+s5_title:"5. ¿Qué espera?",
+s5_help:"Reconocimiento, ayuda, protección.",
+copy:"Copiar todo el texto",
+copied:"Texto copiado."
+},
+ru:{
+title:"Human For Human",
+subtitle:"Простой инструмент для структурирования жалоб",
+intro:"Ничего не отправляется и не сохраняется.",
+s1_title:"1. Кто затронут?",
+s1_help:"Лицо, группа или организация.",
+s2_title:"2. Что произошло?",
+s2_help:"Опишите факты: что, когда, где.",
+s3_title:"3. Где это произошло?",
+s3_help:"Страна, регион, юрисдикция.",
+s4_title:"4. В чем проблема?",
+s4_help:"Нарушение прав, насилие, дискриминация.",
+s5_title:"5. Чего вы ожидаете?",
+s5_help:"Признание, помощь, защита.",
+copy:"Скопировать текст",
+copied:"Текст скопирован."
+},
+uk:{
+title:"Human For Human",
+subtitle:"Простий інструмент для структурування скарг",
+intro:"Нічого не надсилається і не зберігається.",
+s1_title:"1. Хто постраждав?",
+s1_help:"Особа, група чи організація.",
+s2_title:"2. Що сталося?",
+s2_help:"Опишіть факти: що, коли, де.",
+s3_title:"3. Де це сталося?",
+s3_help:"Країна, регіон, юрисдикція.",
+s4_title:"4. У чому проблема?",
+s4_help:"Порушення прав, насильство, дискримінація.",
+s5_title:"5. Чого ви очікуєте?",
+s5_help:"Визнання, допомога, захист.",
+copy:"Скопіювати текст",
+copied:"Текст скопійовано."
+},
+ar:{
+title:"إنسان من أجل إنسان",
+subtitle:"أداة بسيطة لتنظيم البلاغات الحقوقية",
+intro:"لا يتم إرسال أو تخزين أي شيء.",
+s1_title:"1. من المتأثر؟",
+s1_help:"شخص أو مجموعة أو منظمة.",
+s2_title:"2. ماذا حدث؟",
+s2_help:"صف الوقائع: ماذا، متى، أين.",
+s3_title:"3. أين حدث ذلك؟",
+s3_help:"الدولة أو المنطقة أو الاختصاص.",
+s4_title:"4. لماذا هذه مشكلة؟",
+s4_help:"انتهاك حقوق، عنف، تمييز.",
+s5_title:"5. ماذا تتوقع؟",
+s5_help:"اعتراف، مساعدة، حماية.",
+copy:"نسخ النص",
+copied:"تم النسخ."
+},
+zh:{
+title:"Human For Human",
+subtitle:"用于整理人权举报的简单工具",
+intro:"不会发送或存储任何内容。",
+s1_title:"1. 谁受到影响？",
+s1_help:"个人、群体或组织。",
+s2_title:"2. 发生了什么？",
+s2_help:"描述事实：什么、何时、何地。",
+s3_title:"3. 在哪里发生？",
+s3_help:"国家、地区、司法管辖。",
+s4_title:"4. 为什么这是问题？",
+s4_help:"侵犯权利、暴力、歧视。",
+s5_title:"5. 您的期望是什么？",
+s5_help:"承认、帮助、保护。",
+copy:"复制全部文本",
+copied:"文本已复制。"
+}
 };
 
-let currentLang = "fr";
-const switcher = document.getElementById("langSwitch");
-
-Object.keys(LANGS).forEach(l=>{
-  const b=document.createElement("button");
-  b.textContent=l.toUpperCase();
-  b.onclick=()=>setLang(l);
-  switcher.appendChild(b);
-});
+let current="fr";
 
 function setLang(l){
-  currentLang=l;
-  const d=LANGS[l];
-  document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=d[e.dataset.i18n]);
-  document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.placeholder=d[e.dataset.i18nPh]||"");
-  document.querySelectorAll(".lang-switch button").forEach(b=>b.classList.toggle("active",b.textContent.toLowerCase()===l));
+  current=l;
+  const d=T[l];
+  for(const k in d){
+    const el=document.getElementById(k);
+    if(el) el.textContent=d[k];
+  }
+  document.documentElement.lang=l;
+  document.documentElement.dir=(l==="ar")?"rtl":"ltr";
 }
 
-setLang("fr");
-
-/* ================= EXPORT COPY ================= */
-document.getElementById("btnCopy").onclick=()=>{
+function copyAll(){
   let t="";
   document.querySelectorAll("textarea").forEach(a=>t+=a.value+"\n\n");
   navigator.clipboard.writeText(t);
-};
+  document.getElementById("status").textContent=T[current].copied;
+}
+
+setLang("fr");
 </script>
 
 </body>
