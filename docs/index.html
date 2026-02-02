@@ -6,7 +6,7 @@
 
 <title>HFH — Human For Human</title>
 
-<!-- PWA / META -->
+<!-- FAVICON + PWA -->
 <link rel="icon" href="favicon.png" type="image/png" />
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#020617" />
@@ -28,7 +28,6 @@
       src="assets/logo/logo_hfh.png"
       alt="HFH — Human For Human"
       class="site-logo"
-      loading="eager"
     />
     <div class="header-text">
       <h1 data-i18n="title"></h1>
@@ -42,7 +41,6 @@
 
   <div class="reassurance" data-i18n="reassurance"></div>
 
-  <!-- IDENTITÉ -->
   <section class="card">
     <h2 data-i18n="id_title"></h2>
     <p class="optional-note" data-i18n="id_optional"></p>
@@ -57,7 +55,6 @@
     <textarea id="id_notes" data-i18n-ph="id_notes"></textarea>
   </section>
 
-  <!-- STRUCTURE -->
   <section class="card"><h2 data-i18n="s1_title"></h2><textarea id="s1" data-i18n-ph="s1_ph"></textarea></section>
   <section class="card"><h2 data-i18n="s2_title"></h2><textarea id="s2" data-i18n-ph="s2_ph"></textarea></section>
   <section class="card"><h2 data-i18n="s3_title"></h2><textarea id="s3" data-i18n-ph="s3_ph"></textarea></section>
@@ -66,7 +63,6 @@
   <section class="card"><h2 data-i18n="s6_title"></h2><textarea id="s6" data-i18n-ph="s6_ph"></textarea></section>
   <section class="card"><h2 data-i18n="s7_title"></h2><textarea id="s7" data-i18n-ph="s7_ph"></textarea></section>
 
-  <!-- EXPORT -->
   <section class="card">
     <h2 data-i18n="export_title"></h2>
     <div class="actions">
@@ -80,6 +76,41 @@
 
 </main>
 
-<script src="js/app.js"></script>
+<script>
+/* ================= MULTILINGUE ================= */
+
+const LANGS = {
+  fr:{title:"Human For Human",subtitle:"Outil neutre de structuration de plaintes et signalements internationaux",reassurance:"Rien n’est envoyé. Rien n’est stocké. Tout reste sur votre appareil.",id_title:"Informations d’identité",id_optional:"Cette section est facultative.",id_anonymous:"Déclaration anonyme",id_name:"Nom ou pseudonyme",id_contact:"Contact",id_notes:"Notes",s1_title:"1. Personnes concernées",s1_ph:"",s2_title:"2. Faits",s2_ph:"",s3_title:"3. Pays / juridictions",s3_ph:"",s4_title:"4. Atteintes",s4_ph:"",s5_title:"5. Preuves",s5_ph:"",s6_title:"6. Impact humain",s6_ph:"",s7_title:"7. Ce qui est recherché",s7_ph:"",export_title:"Exports locaux",export_pdf:"Exporter PDF",export_docx:"Exporter DOCX",export_copy:"Copier texte",export_note:"Généré localement."},
+  en:{title:"Human For Human",subtitle:"Neutral tool for structuring international complaints",reassurance:"Nothing is sent or stored.",id_title:"Identity",id_optional:"Optional section.",id_anonymous:"Anonymous report",id_name:"Name or alias",id_contact:"Contact",id_notes:"Notes",s1_title:"1. Persons concerned",s1_ph:"",s2_title:"2. Facts",s2_ph:"",s3_title:"3. Countries",s3_ph:"",s4_title:"4. Violations",s4_ph:"",s5_title:"5. Evidence",s5_ph:"",s6_title:"6. Human impact",s6_ph:"",s7_title:"7. Expected outcome",s7_ph:"",export_title:"Local exports",export_pdf:"Export PDF",export_docx:"Export DOCX",export_copy:"Copy text",export_note:"Generated locally."}
+};
+
+let currentLang = "fr";
+const switcher = document.getElementById("langSwitch");
+
+Object.keys(LANGS).forEach(l=>{
+  const b=document.createElement("button");
+  b.textContent=l.toUpperCase();
+  b.onclick=()=>setLang(l);
+  switcher.appendChild(b);
+});
+
+function setLang(l){
+  currentLang=l;
+  const d=LANGS[l];
+  document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=d[e.dataset.i18n]);
+  document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.placeholder=d[e.dataset.i18nPh]||"");
+  document.querySelectorAll(".lang-switch button").forEach(b=>b.classList.toggle("active",b.textContent.toLowerCase()===l));
+}
+
+setLang("fr");
+
+/* ================= EXPORT COPY ================= */
+document.getElementById("btnCopy").onclick=()=>{
+  let t="";
+  document.querySelectorAll("textarea").forEach(a=>t+=a.value+"\n\n");
+  navigator.clipboard.writeText(t);
+};
+</script>
+
 </body>
 </html>
